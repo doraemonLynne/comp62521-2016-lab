@@ -28,8 +28,17 @@ def mode(X):
             d[item] = 1
 
     m = (0, 0)
+    k = []
+    maxim =0
     for key in d.keys():
         if d[key] > m[1]:
             m = (key, d[key])
 
     return [m[0]]
+            if d[key]> maxim:
+                maxim = d[key]
+
+    for key in d.keys():
+        if d[key] == maxim:
+            k+=[key]
+    return k
