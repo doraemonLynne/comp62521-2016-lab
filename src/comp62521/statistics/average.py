@@ -33,11 +33,8 @@ def mode(X):
     for key in d.keys():
         if d[key] > m[1]:
             m = (key, d[key])
-
-    return [m[0]]
             if d[key]> maxim:
                 maxim = d[key]
-
     for key in d.keys():
         if d[key] == maxim:
             k+=[key]
