@@ -1,6 +1,7 @@
 from comp62521 import app
 from database import database
 from flask import (render_template, request)
+from flask import Flask, jsonify, render_template, request
 
 def format_data(data):
     fmt = "%.2f"
@@ -115,5 +116,85 @@ def showPublicationSummary(status):
     if (status == "author_year"):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
+
+    #author_appearingtimes
+    if (status == "author_appearingtimes"):
+        args["title"] = "Author by AppearingTimes"
+        args["data"] = db.get_author_totals_by_appearingtimes()
+
+    return render_template('statisticsdetails.html', args=args)
+
+
+@app.route("/statisticsdetails/publication_author_sortable")
+def showPublicationSortable():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"publication_author_sortable"}
+    args["title"] = "Author Publication Sortable"
+    args["data"] = db.get_publications_by_author()
+    return render_template('statistics_details.html', args=args)
+
+
+@app.route("/statisticsdetails/<status>/ascend")
+def showAscend(status):
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":status}
+
+    if (status == "Author"):
+        args["title"] = "publication_author_ascend"
+        args["data"] = db.get_author_ascend()
+
+    if (status == "Papers"):
+        args["title"] = "publication_papers_ascend"
+        args["data"] = db.get_papers_ascend()
+
+    if (status == "Journals"):
+        args["title"] = "publication_journals_ascend"
+        args["data"] = db.get_journals_ascend()
+
+    if (status == "Books"):
+        args["title"] = "publication_books_ascend"
+        args["data"] = db.get_books_ascend()
+
+    if (status == "Chapter"):
+        args["title"] = "publication_chapter_ascend"
+        args["data"] = db.get_chapter_ascend()
+
+    if (status == "Total"):
+        args["title"] = "publication_total_ascend"
+        args["data"] = db.get_total_ascend()
+
+    return render_template('statistics_details.html', args=args)
+
+@app.route("/statisticsdetails/<status>/descend")
+def showDescend(status):
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":status}
+
+    if (status == "Author"):
+        args["title"] = "publication_author_descend"
+        args["data"] = db.get_author_descend()
+
+    if (status == "Papers"):
+        args["title"] = "publication_papers_descend"
+        args["data"] = db.get_papers_descend()
+
+    if (status == "Journals"):
+        args["title"] = "publication_journals_descend"
+        args["data"] = db.get_journals_descend()
+
+    if (status == "Books"):
+        args["title"] = "publication_books_descend"
+        args["data"] = db.get_books_descend()
+
+    if (status == "Chapter"):
+        args["title"] = "publication_chapter_descend"
+        args["data"] = db.get_chapter_descend()
+
+    if (status == "Total"):
+        args["title"] = "publication_total_descend"
+        args["data"] = db.get_total_descend()
 
     return render_template('statistics_details.html', args=args)

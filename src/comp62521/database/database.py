@@ -208,7 +208,6 @@ class Database:
             for i in range(len(astats)) ]
         return (header, data)
 
-
     def get_publications_by_author(self):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
@@ -220,8 +219,141 @@ class Database:
                 astats[a][p.pub_type] += 1
 
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
-            for i in range(len(astats)) ]
+            for i in range(len(astats))]
         return (header, data)
+
+    def get_author_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Author(t):
+            return t[0]
+        sortedData = sorted(data,key = by_Author)
+        return(header,sortedData)
+
+    def get_papers_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Paper(t):
+            return t[1]
+        sortedData = sorted(data,key = by_Paper)
+        return(header,sortedData)
+
+    def get_journals_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Journal(t):
+            return t[2]
+        sortedData = sorted(data,key = by_Journal)
+        return(header,sortedData)
+
+    def get_books_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Books(t):
+            return t[3]
+        sortedData = sorted(data,key = by_Books)
+        return(header,sortedData)
+
+    def get_chapter_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Chapter(t):
+            return t[4]
+        sortedData = sorted(data,key = by_Chapter)
+        return(header,sortedData)
+
+    def get_total_ascend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Total(t):
+            return t[5]
+        sortedData = sorted(data,key = by_Total)
+        return(header,sortedData)
+
+
+    def get_author_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Author(t):
+            return t[0]
+        sortedData = sorted(data,key = by_Author,reverse=True)
+        return(header,sortedData)
+
+    def get_papers_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Paper(t):
+            return t[1]
+        sortedData = sorted(data,key = by_Paper,reverse=True)
+        return(header,sortedData)
+
+    def get_journals_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Journal(t):
+            return t[2]
+        sortedData = sorted(data,key = by_Journal,reverse=True)
+        return(header,sortedData)
+
+    def get_books_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Books(t):
+            return t[3]
+        sortedData = sorted(data,key = by_Books,reverse=True)
+        return(header,sortedData)
+
+    def get_chapter_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Chapter(t):
+            return t[4]
+        sortedData = sorted(data,key = by_Chapter,reverse=True)
+        return(header,sortedData)
+
+    def get_total_descend(self):
+
+        collection=self.get_publications_by_author()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Total(t):
+            return t[5]
+        sortedData = sorted(data,key = by_Total,reverse=True)
+        return(header,sortedData)
 
     def get_average_authors_per_publication_by_year(self, av):
         header = ("Year", "Conference papers",
@@ -300,6 +432,21 @@ class Database:
         data = [ [y] + [len(s) for s in ystats[y]] + [len(ystats[y][0] | ystats[y][1] | ystats[y][2] | ystats[y][3])]
             for y in ystats ]
         return (header, data)
+
+    def get_author_totals_by_appearingtimes(self):
+        header = ("Author", "Number of times first author", "Number of times last author", "Total")
+
+        astats = [ [0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                if a==p.authors[0]:
+                    astats[a][0]+=1
+                if a==p.authors[-1]:
+                    astats[a][1]+=1
+        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
+            for i in range(len(astats)) ]
+        return (header, data)
+        pass
 
     def add_publication(self, pub_type, title, year, authors):
         if year == None or len(authors) == 0:
