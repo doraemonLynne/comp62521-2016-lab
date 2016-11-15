@@ -117,7 +117,7 @@ def showPublicationSummary(status):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
 
-    #author_appearingtimes
+    #author_appearingtimes111
     if (status == "author_appearingtimes"):
         args["title"] = "Author by AppearingTimes"
         args["data"] = db.get_author_totals_by_appearingtimes()
