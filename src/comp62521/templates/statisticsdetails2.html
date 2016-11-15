@@ -20,6 +20,7 @@ $(function() {
     var order = ["ascend", "descend"];
     var url= window.location.search;
 
+    // change url
     $("thead tr th a").each(function(index,el){
       $(this).click(function(){
         $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName[index] + "&order=" + order[0]);
