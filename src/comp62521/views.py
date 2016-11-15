@@ -146,7 +146,7 @@ def showPublicationSummary(status):
 #             if(col=="lastAppearingTimes"):
 #                 args["title"] = "publication_lastAppearingTimes_descend"
 #                 args["data"] = db.get_lastAppearingTimes_descend()
-#         return render_template('appearingTimes.html', args=args) 
+#         return render_template('appearingTimes.html', args=args)
 #     else:
 #         args["title"] = "Author by AppearingTimes"
 #         args["data"] = db.get_author_totals_by_appearingtimes()
@@ -203,4 +203,3 @@ def showPublicationSortable():
         args["title"] = "Author Publication"
         args["data"] = db.get_publications_by_author()
         return render_template('statisticsdetails2.html', args=args)
-

@@ -34,7 +34,7 @@ class Author:
                 if name in LastNamePart:
                     self.lastName= name+" "+ self.lastName
                 else:
-                    self.firstName+= name
+                    self.firstName+= name+" "
 
 class Stat:
     STR = ["Mean", "Median", "Mode"]
@@ -229,20 +229,37 @@ class Database:
             for a in p.authors:
                 astats[a][p.pub_type] += 1
 
-        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])] for i in range(len(astats))]
+        data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] for i in range(len(astats))]
+        return (header, data)
+
+    def get_publications_by_author_for_lName_sorting(self):
+        header = ("Author", "Number of conference papers",
+            "Number of journals", "Number of books",
+            "Number of book chapers", "Total")
+
+        astats = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                astats[a][p.pub_type] += 1
+
+        data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] +[self.authors[i].firstName]+[self.authors[i].lastName] for i in range(len(astats))]
         return (header, data)
 
     def get_author_ascend(self):
-
-        collection=self.get_publications_by_author()
+        collection = self.get_publications_by_author_for_lName_sorting()
         header=collection[0]
         data=collection[1]
 
         def by_Author(t):
-            return t[0].lastName
+            return t[7]
 
         sortedData = sorted(data,key = by_Author)
-        return(header,sortedData)
+        sortedDataClipped =[]
+        for datum in sortedData:
+            sortedDataClipped.append(datum[0:6])
+
+        return(header,sortedDataClipped)
+        # return(header,sortedData)
 
     def get_papers_ascend(self):
 
@@ -302,14 +319,19 @@ class Database:
 
     def get_author_descend(self):
 
-        collection=self.get_publications_by_author()
+        collection=self.get_publications_by_author_for_lName_sorting()
         header=collection[0]
         data=collection[1]
 
         def by_Author(t):
-            return t[0].lastName
+            return t[7]
         sortedData = sorted(data,key = by_Author,reverse=True)
-        return(header,sortedData)
+        sortedDataClipped =[]
+        for datum in sortedData:
+            sortedDataClipped.append(datum[0:6])
+
+        return(header,sortedDataClipped)
+        # return(header,sortedData)
 
     def get_papers_descend(self):
 
