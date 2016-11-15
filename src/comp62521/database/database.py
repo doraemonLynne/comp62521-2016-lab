@@ -5,6 +5,7 @@ from xml.sax import handler, make_parser, SAXException
 
 PublicationType = [
     "Conference Paper", "Journal", "Book", "Book Chapter"]
+LastNamePart = set(["van","der","de","du","al","el","da","Van","Der","De","Du","Al","El","Da"])
 
 class Publication:
     CONFERENCE_PAPER = 0
@@ -25,10 +26,15 @@ class Author:
     def __init__(self, name):
         self.name = name
         nameList = name.split()
-        self.firstName=""
         self.lastName = nameList[-1]
-        for name in nameList[:-1]:
-            self.firstName+= name
+        self.firstName = nameList[0]
+        if len(nameList) > 2:
+            posLastNames = nameList[1:-1]
+            for name in posLastNames:
+                if name in LastNamePart:
+                    self.lastName= name+" "+ self.lastName
+                else:
+                    self.firstName+= name
 
 class Stat:
     STR = ["Mean", "Median", "Mode"]
@@ -301,7 +307,7 @@ class Database:
         data=collection[1]
 
         def by_Author(t):
-            return t[0]
+            return t[0].lastName
         sortedData = sorted(data,key = by_Author,reverse=True)
         return(header,sortedData)
 
