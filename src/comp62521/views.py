@@ -124,77 +124,83 @@ def showPublicationSummary(status):
 
     return render_template('statisticsdetails.html', args=args)
 
+# @app.route("/statisticsdetails/author_appearingtimes")
+# def showAppearingTimes():
+#     dataset = app.config['DATASET']
+#     db = app.config['DATABASE']
+#     col= request.args.get('col')
+#     order=request.args.get('order')
+#     args = {"dataset":dataset, "id":col and order}
+#     if col and order:
+#         if(order == "ascend"):
+#             if(col=="firstAppearingTimes"):
+#                 args["title"] = "publication_firstAppearingTimes_ascend"
+#                 args["data"] = db.get_firstAppearingTimes_ascend()
+#             if(col=="lastAppearingTimes"):
+#                 args["title"] = "publication_lastAppearingTimes_ascend"
+#                 args["data"] = db.get_lastAppearingTimes_ascend()
+#         if(order == "descend"):
+#             if(col=="firstAppearingTimes"):
+#                 args["title"] = "publication_firstAppearingTimes_descend"
+#                 args["data"] = db.get_firstAppearingTimes_descend()
+#             if(col=="lastAppearingTimes"):
+#                 args["title"] = "publication_lastAppearingTimes_descend"
+#                 args["data"] = db.get_lastAppearingTimes_descend()
+#         return render_template('appearingTimes.html', args=args) 
+#     else:
+#         args["title"] = "Author by AppearingTimes"
+#         args["data"] = db.get_author_totals_by_appearingtimes()
+#         return render_template('statisticsdetails.html', args=args)
 
 @app.route("/statisticsdetails/publication_author_sortable")
 def showPublicationSortable():
     dataset = app.config['DATASET']
     db = app.config['DATABASE']
-    args = {"dataset":dataset, "id":"publication_author_sortable"}
-    args["title"] = "Author Publication Sortable"
-    args["data"] = db.get_publications_by_author()
-    return render_template('statistics_details.html', args=args)
+    col= request.args.get('col')
+    order=request.args.get('order')
+    args = {"dataset":dataset, "id":col and order}
+    if col and order:
+        if(order == "ascend"):
+            if(col=="author"):
+                args["title"] = "publication_author_ascend"
+                args["data"] = db.get_author_ascend()
+            if(col=="papers"):
+                args["title"] = "publication_papers_ascend"
+                args["data"] = db.get_papers_ascend()
+            if(col=="journals"):
+                args["title"] = "publication_journals_ascend"
+                args["data"] = db.get_journals_ascend()
+            if(col=="books"):
+                args["title"] = "publication_books_ascend"
+                args["data"] = db.get_books_ascend()
+            if(col=="chapter"):
+                args["title"] = "publication_chapter_ascend"
+                args["data"] = db.get_chapter_ascend()
+            if(col=="total"):
+                args["title"] = "publication_total_ascend"
+                args["data"] = db.get_total_ascend()
+        if(order == "descend"):
+            if(col=="author"):
+                args["title"] = "publication_author_descend"
+                args["data"] = db.get_author_descend()
+            if(col=="papers"):
+                args["title"] = "publication_papers_descend"
+                args["data"] = db.get_papers_descend()
+            if(col=="journals"):
+                args["title"] = "publication_journals_descend"
+                args["data"] = db.get_journals_descend()
+            if(col=="books"):
+                args["title"] = "publication_books_descend"
+                args["data"] = db.get_books_descend()
+            if(col=="chapter"):
+                args["title"] = "publication_chapter_descend"
+                args["data"] = db.get_chapter_descend()
+            if(col=="total"):
+                args["title"] = "publication_total_descend"
+                args["data"] = db.get_total_descend()
+        return render_template('statisticsdetails2.html', args=args)
+    else:
+        args["title"] = "Author Publication"
+        args["data"] = db.get_publications_by_author()
+        return render_template('statisticsdetails2.html', args=args)
 
-
-@app.route("/statisticsdetails/<status>/ascend")
-def showAscend(status):
-    dataset = app.config['DATASET']
-    db = app.config['DATABASE']
-    args = {"dataset":dataset, "id":status}
-
-    if (status == "Author"):
-        args["title"] = "publication_author_ascend"
-        args["data"] = db.get_author_ascend()
-
-    if (status == "Papers"):
-        args["title"] = "publication_papers_ascend"
-        args["data"] = db.get_papers_ascend()
-
-    if (status == "Journals"):
-        args["title"] = "publication_journals_ascend"
-        args["data"] = db.get_journals_ascend()
-
-    if (status == "Books"):
-        args["title"] = "publication_books_ascend"
-        args["data"] = db.get_books_ascend()
-
-    if (status == "Chapter"):
-        args["title"] = "publication_chapter_ascend"
-        args["data"] = db.get_chapter_ascend()
-
-    if (status == "Total"):
-        args["title"] = "publication_total_ascend"
-        args["data"] = db.get_total_ascend()
-
-    return render_template('statistics_details.html', args=args)
-
-@app.route("/statisticsdetails/<status>/descend")
-def showDescend(status):
-    dataset = app.config['DATASET']
-    db = app.config['DATABASE']
-    args = {"dataset":dataset, "id":status}
-
-    if (status == "Author"):
-        args["title"] = "publication_author_descend"
-        args["data"] = db.get_author_descend()
-
-    if (status == "Papers"):
-        args["title"] = "publication_papers_descend"
-        args["data"] = db.get_papers_descend()
-
-    if (status == "Journals"):
-        args["title"] = "publication_journals_descend"
-        args["data"] = db.get_journals_descend()
-
-    if (status == "Books"):
-        args["title"] = "publication_books_descend"
-        args["data"] = db.get_books_descend()
-
-    if (status == "Chapter"):
-        args["title"] = "publication_chapter_descend"
-        args["data"] = db.get_chapter_descend()
-
-    if (status == "Total"):
-        args["title"] = "publication_total_descend"
-        args["data"] = db.get_total_descend()
-
-    return render_template('statistics_details.html', args=args)

@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}{{ args.title }}{% endblock %} {% block content %}
+<style type="text/css">
+thead th,
+tbody td {
+    border: 1px solid #eaeaea;
+    padding: 5px;
+}
+thead th a{
+  text-decoration: none;
+  color: #000;
+}
+table tbody td {
+    text-align: center;
+}
+</style>
+<script src="{{url_for('static', filename='jquery.js')}}"></script>
+<script type="text/javascript">
+$(function() {
+    var colName = ["author", "papers", "journals", "books", "chapter", "total"];
+    var order = ["ascend", "descend"];
+    var url= window.location.search;
+
+    $("thead tr th a").each(function(index,el){
+      $(this).click(function(){
+        $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName[index] + "&order=" + order[0]);
+        if(url==("?col=" + colName[index] + "&order=" + order[0])){
+          $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName[index] + "&order=" + order[1]);
+        }
+        if(url==("?col=" + colName[index] + "&order=" + order[1])){
+          $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName[index] + "&order=" + order[0]);
+        }
+      })
+    })
+})
+</script>
+<h1>{{ args.title }}</h1>
+<table>
+    <thead>
+        <tr>
+            {% for column in args.data[0] %}
+            <th><a href="#">{{ column }}</a></th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in args.data[1] %}
+        <tr>
+            {% for data_item in row %}
+            <td>{{ data_item }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
