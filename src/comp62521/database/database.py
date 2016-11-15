@@ -24,6 +24,11 @@ class Publication:
 class Author:
     def __init__(self, name):
         self.name = name
+        nameList = name.split()
+        self.firstName=""
+        self.lastName = nameList[-1]
+        for name in nameList[:-1]:
+            self.firstName+= name
 
 class Stat:
     STR = ["Mean", "Median", "Mode"]
@@ -218,8 +223,7 @@ class Database:
             for a in p.authors:
                 astats[a][p.pub_type] += 1
 
-        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
-            for i in range(len(astats))]
+        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])] for i in range(len(astats))]
         return (header, data)
 
     def get_author_ascend(self):
@@ -229,7 +233,8 @@ class Database:
         data=collection[1]
 
         def by_Author(t):
-            return t[0]
+            return t[0].lastName
+
         sortedData = sorted(data,key = by_Author)
         return(header,sortedData)
 
