@@ -479,7 +479,110 @@ class Database:
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header, data)
-        pass
+
+    def get_author_totals_by_appearingtimes_lName_sorting(self):
+        header = ("Author", "Number of times first author", "Number of times last author", "Total")
+
+        astats = [ [0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                if a==p.authors[0]:
+                    astats[a][0]+=1
+                if a==p.authors[-1]:
+                    astats[a][1]+=1
+        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]+[self.authors[i].firstName]+[self.authors[i].lastName]
+            for i in range(len(astats)) ]
+        return (header, data)
+    
+    def get_appearingauthor_ascend(self):
+        collection = self.get_author_totals_by_appearingtimes_lName_sorting()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Author(t):
+            return t[5]
+
+        sortedData = sorted(data,key = by_Author)
+        sortedDataClipped =[]
+        for datum in sortedData:
+            sortedDataClipped.append(datum[0:4])
+
+        return(header,sortedDataClipped)
+
+    def get_appearingauthor_descend(self):
+        collection = self.get_author_totals_by_appearingtimes_lName_sorting()
+        header=collection[0]
+        data=collection[1]
+
+        def by_Author(t):
+            return t[5]
+
+        sortedData = sorted(data,key = by_Author,reverse=True)
+        sortedDataClipped =[]
+        for datum in sortedData:
+            sortedDataClipped.append(datum[0:4])
+
+        return(header,sortedDataClipped)
+
+    def get_firstAppearingTimes_ascend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_first(t):
+            return t[1]
+        sortedData = sorted(data,key = by_first)
+        return(header,sortedData)
+
+    def get_firstAppearingTimes_descend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_first(t):
+            return t[1]
+        sortedData = sorted(data,key = by_first,reverse=True)
+        return(header,sortedData)
+
+    def get_lastAppearingTimes_ascend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_last(t):
+            return t[2]
+        sortedData = sorted(data,key = by_last)
+        return(header,sortedData)
+
+    def get_lastAppearingTimes_descend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_last(t):
+            return t[2]
+        sortedData = sorted(data,key = by_last,reverse=True)
+        return(header,sortedData)
+
+    def get_lastAppearingTimesTotal_ascend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_total(t):
+            return t[3]
+        sortedData = sorted(data,key = by_total)
+        return(header,sortedData)
+
+    def get_lastAppearingTimesTotal_descend(self):
+        collection=self.get_author_totals_by_appearingtimes()
+        header=collection[0]
+        data=collection[1]
+
+        def by_total(t):
+            return t[3]
+        sortedData = sorted(data,key = by_total,reverse=True)
+        return(header,sortedData)
 
     def add_publication(self, pub_type, title, year, authors):
         if year == None or len(authors) == 0:

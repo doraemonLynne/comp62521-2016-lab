@@ -118,39 +118,51 @@ def showPublicationSummary(status):
         args["data"] = db.get_author_totals_by_year()
 
     #author_appearingtimes
-    if (status == "author_appearingtimes"):
-        args["title"] = "Author by AppearingTimes"
-        args["data"] = db.get_author_totals_by_appearingtimes()
+    # if (status == "author_appearingtimes"):
+    #     args["title"] = "Author by AppearingTimes"
+    #     args["data"] = db.get_author_totals_by_appearingtimes()
 
     return render_template('statisticsdetails.html', args=args)
 
-# @app.route("/statisticsdetails/author_appearingtimes")
-# def showAppearingTimes():
-#     dataset = app.config['DATASET']
-#     db = app.config['DATABASE']
-#     col= request.args.get('col')
-#     order=request.args.get('order')
-#     args = {"dataset":dataset, "id":col and order}
-#     if col and order:
-#         if(order == "ascend"):
-#             if(col=="firstAppearingTimes"):
-#                 args["title"] = "publication_firstAppearingTimes_ascend"
-#                 args["data"] = db.get_firstAppearingTimes_ascend()
-#             if(col=="lastAppearingTimes"):
-#                 args["title"] = "publication_lastAppearingTimes_ascend"
-#                 args["data"] = db.get_lastAppearingTimes_ascend()
-#         if(order == "descend"):
-#             if(col=="firstAppearingTimes"):
-#                 args["title"] = "publication_firstAppearingTimes_descend"
-#                 args["data"] = db.get_firstAppearingTimes_descend()
-#             if(col=="lastAppearingTimes"):
-#                 args["title"] = "publication_lastAppearingTimes_descend"
-#                 args["data"] = db.get_lastAppearingTimes_descend()
-#         return render_template('appearingTimes.html', args=args)
-#     else:
-#         args["title"] = "Author by AppearingTimes"
-#         args["data"] = db.get_author_totals_by_appearingtimes()
-#         return render_template('statisticsdetails.html', args=args)
+@app.route("/statisticsdetails/author_appearingtimes")
+def showAppearingTimes():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    col= request.args.get('col')
+    order=request.args.get('order')
+    args = {"dataset":dataset, "id":col and order}
+    if col and order:
+        if(order == "ascend"):
+            if(col=="author"):
+                args["title"] = "publication_appearingauthor_ascend"
+                args["data"] = db.get_appearingauthor_ascend()
+            if(col=="firstAppearingTimes"):
+                args["title"] = "publication_firstAppearingTimes_ascend"
+                args["data"] = db.get_firstAppearingTimes_ascend()
+            if(col=="lastAppearingTimes"):
+                args["title"] = "publication_lastAppearingTimes_ascend"
+                args["data"] = db.get_lastAppearingTimes_ascend()
+            if(col=="total"):
+                args["title"] = "publication_lastAppearingTimesTotal_ascend"
+                args["data"] = db.get_lastAppearingTimesTotal_ascend()
+        if(order == "descend"):
+            if(col=="author"):
+                args["title"] = "publication_appearingauthor_descend"
+                args["data"] = db.get_appearingauthor_descend()
+            if(col=="firstAppearingTimes"):
+                args["title"] = "publication_firstAppearingTimes_descend"
+                args["data"] = db.get_firstAppearingTimes_descend()
+            if(col=="lastAppearingTimes"):
+                args["title"] = "publication_lastAppearingTimes_descend"
+                args["data"] = db.get_lastAppearingTimes_descend()
+            if(col=="total"):
+                args["title"] = "publication_lastAppearingTimesTotal_descend"
+                args["data"] = db.get_lastAppearingTimesTotal_descend()
+        return render_template('appearingTimes.html', args=args)
+    else:
+        args["title"] = "Author by AppearingTimes"
+        args["data"] = db.get_author_totals_by_appearingtimes()
+        return render_template('appearingTimes.html', args=args)
 
 @app.route("/statisticsdetails/publication_author_sortable")
 def showPublicationSortable():
