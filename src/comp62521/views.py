@@ -117,11 +117,6 @@ def showPublicationSummary(status):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
 
-    #author_appearingtimes
-    # if (status == "author_appearingtimes"):
-    #     args["title"] = "Author by AppearingTimes"
-    #     args["data"] = db.get_author_totals_by_appearingtimes()
-
     return render_template('statisticsdetails.html', args=args)
 
 @app.route("/statisticsdetails/author_appearingtimes")
@@ -215,3 +210,17 @@ def showPublicationSortable():
         args["title"] = "Author Publication"
         args["data"] = db.get_publications_by_author()
         return render_template('statisticsdetails2.html', args=args)
+
+@app.route("/statisticsdetails/author_search")
+def showAuthorSearch():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    searchText= request.args.get('searchText')
+    args = {"dataset":dataset, "id":"authorSearch"}
+    if searchText:   
+        args["title"] = "Author Search"
+        args["data"] = db.get_author_search(searchText)
+    else:
+        args["title"] = "Author Search"
+        args["data"] = db.get_author_search_details()
+    return render_template('authorSearch.html', args=args)

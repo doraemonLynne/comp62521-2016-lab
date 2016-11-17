@@ -232,6 +232,64 @@ class Database:
         data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] for i in range(len(astats))]
         return (header, data)
 
+    def get_author_search_details(self):
+        header = ("Author", "Number of conference papers",
+            "Number of journals", "Number of books",
+            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors")
+
+        astatsPub = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                astatsPub[a][p.pub_type] += 1
+
+        coauthors = {}
+        astatsAuthor = [ [0, 0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                if a==p.authors[0]:
+                    astatsAuthor[a][0]+=1
+                if a==p.authors[-1]:
+                    astatsAuthor[a][1]+=1
+                for a2 in p.authors:
+                    if a != a2:
+                        try:
+                            coauthors[a].add(a2)
+                            astatsAuthor[a][2]=len(coauthors[a]);
+                        except KeyError:
+                            coauthors[a] = set([a2])
+
+        data = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] for i in range(len(astatsPub))]
+        return (header, data)
+
+    def get_author_search(self,searchText):
+        header = ("Author", "Number of conference papers",
+            "Number of journals", "Number of books",
+            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors")
+
+        astatsPub = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                astatsPub[a][p.pub_type] += 1
+
+        coauthors = {}
+        astatsAuthor = [ [0, 0, 0] for _ in range(len(self.authors)) ]
+        for p in self.publications:
+            for a in p.authors:
+                if a==p.authors[0]:
+                    astatsAuthor[a][0]+=1
+                if a==p.authors[-1]:
+                    astatsAuthor[a][1]+=1
+                for a2 in p.authors:
+                    if a != a2:
+                        try:
+                            coauthors[a].add(a2)
+                            astatsAuthor[a][2]=len(coauthors[a]);
+                        except KeyError:
+                            coauthors[a] = set([a2])
+
+        data = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] for i in range(len(astatsPub)) if self.authors[i].name==searchText]
+        return (header, data)
+
     def get_publications_by_author_for_lName_sorting(self):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
@@ -644,6 +702,7 @@ class Database:
                 if a < a2:
                     links.add((a, a2))
         return (nodes, links)
+
 
 class DocumentHandler(handler.ContentHandler):
     TITLE_TAGS = [ "sub", "sup", "i", "tt", "ref" ]
