@@ -127,32 +127,12 @@ def showAppearingTimes():
     order=request.args.get('order')
     args = {"dataset":dataset, "id":col and order}
     if col and order:
-        if(order == "ascend"):
-            if(col=="author"):
-                args["title"] = "publication_appearingauthor_ascend"
-                args["data"] = db.get_appearingauthor_ascend()
-            if(col=="firstAppearingTimes"):
-                args["title"] = "publication_firstAppearingTimes_ascend"
-                args["data"] = db.get_firstAppearingTimes_ascend()
-            if(col=="lastAppearingTimes"):
-                args["title"] = "publication_lastAppearingTimes_ascend"
-                args["data"] = db.get_lastAppearingTimes_ascend()
-            if(col=="total"):
-                args["title"] = "publication_lastAppearingTimesTotal_ascend"
-                args["data"] = db.get_lastAppearingTimesTotal_ascend()
-        if(order == "descend"):
-            if(col=="author"):
-                args["title"] = "publication_appearingauthor_descend"
-                args["data"] = db.get_appearingauthor_descend()
-            if(col=="firstAppearingTimes"):
-                args["title"] = "publication_firstAppearingTimes_descend"
-                args["data"] = db.get_firstAppearingTimes_descend()
-            if(col=="lastAppearingTimes"):
-                args["title"] = "publication_lastAppearingTimes_descend"
-                args["data"] = db.get_lastAppearingTimes_descend()
-            if(col=="total"):
-                args["title"] = "publication_lastAppearingTimesTotal_descend"
-                args["data"] = db.get_lastAppearingTimesTotal_descend()
+        if col=="author":
+            args["title"] = "author"+"-"+order
+            args["data"] = db.get_appearingauthor_order(order)
+        else:
+            args["title"] = col+"-"+order
+            args["data"] = db.get_appearingcol_order(col,order)
         return render_template('appearingTimes.html', args=args)
     else:
         args["title"] = "Author by AppearingTimes"
@@ -167,45 +147,14 @@ def showPublicationSortable():
     order=request.args.get('order')
     args = {"dataset":dataset, "id":col and order}
     if col and order:
-        if(order == "ascend"):
-            if(col=="author"):
-                args["title"] = "publication_author_ascend"
-                args["data"] = db.get_author_ascend()
-            if(col=="papers"):
-                args["title"] = "publication_papers_ascend"
-                args["data"] = db.get_papers_ascend()
-            if(col=="journals"):
-                args["title"] = "publication_journals_ascend"
-                args["data"] = db.get_journals_ascend()
-            if(col=="books"):
-                args["title"] = "publication_books_ascend"
-                args["data"] = db.get_books_ascend()
-            if(col=="chapter"):
-                args["title"] = "publication_chapter_ascend"
-                args["data"] = db.get_chapter_ascend()
-            if(col=="total"):
-                args["title"] = "publication_total_ascend"
-                args["data"] = db.get_total_ascend()
-        if(order == "descend"):
-            if(col=="author"):
-                args["title"] = "publication_author_descend"
-                args["data"] = db.get_author_descend()
-            if(col=="papers"):
-                args["title"] = "publication_papers_descend"
-                args["data"] = db.get_papers_descend()
-            if(col=="journals"):
-                args["title"] = "publication_journals_descend"
-                args["data"] = db.get_journals_descend()
-            if(col=="books"):
-                args["title"] = "publication_books_descend"
-                args["data"] = db.get_books_descend()
-            if(col=="chapter"):
-                args["title"] = "publication_chapter_descend"
-                args["data"] = db.get_chapter_descend()
-            if(col=="total"):
-                args["title"] = "publication_total_descend"
-                args["data"] = db.get_total_descend()
+        if col=="author":
+            args["title"] = "author"+"-"+order
+            args["data"] = db.get_author_order(order)
+        else:
+            args["title"] = col+"-"+order
+            args["data"] = db.get_col_order(col,order)
         return render_template('statisticsdetails2.html', args=args)
+
     else:
         args["title"] = "Author Publication"
         args["data"] = db.get_publications_by_author()

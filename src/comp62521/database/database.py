@@ -262,32 +262,12 @@ class Database:
         return (header, data)
 
     def get_author_search(self,searchText):
-        header = ("Author", "Number of conference papers",
-            "Number of journals", "Number of books",
-            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors")
+        collection = self.get_author_search_details()
+        header=collection[0]
+        data=collection[1]
 
-        astatsPub = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
-        for p in self.publications:
-            for a in p.authors:
-                astatsPub[a][p.pub_type] += 1
+        data=[data[i] for i in range(len(data)) if self.authors[i].name==searchText]
 
-        coauthors = {}
-        astatsAuthor = [ [0, 0, 0] for _ in range(len(self.authors)) ]
-        for p in self.publications:
-            for a in p.authors:
-                if a==p.authors[0]:
-                    astatsAuthor[a][0]+=1
-                if a==p.authors[-1]:
-                    astatsAuthor[a][1]+=1
-                for a2 in p.authors:
-                    if a != a2:
-                        try:
-                            coauthors[a].add(a2)
-                            astatsAuthor[a][2]=len(coauthors[a]);
-                        except KeyError:
-                            coauthors[a] = set([a2])
-
-        data = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] for i in range(len(astatsPub)) if self.authors[i].name==searchText]
         return (header, data)
 
     def get_publications_by_author_for_lName_sorting(self):
@@ -303,147 +283,40 @@ class Database:
         data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] +[self.authors[i].firstName]+[self.authors[i].lastName] for i in range(len(astats))]
         return (header, data)
 
-    def get_author_ascend(self):
+
+    def get_author_order(self,order):
         collection = self.get_publications_by_author_for_lName_sorting()
         header=collection[0]
         data=collection[1]
 
-        def by_Author(t):
-            return t[7]
+        if order=="ascend":
+            sortedData = sorted(data,key = lambda x:x[7])
+            sortedDataClipped =[]
+        if order=="descend":
+            sortedData = sorted(data,key = lambda x:x[7],reverse=True)
+            sortedDataClipped =[]
 
-        sortedData = sorted(data,key = by_Author)
-        sortedDataClipped =[]
         for datum in sortedData:
             sortedDataClipped.append(datum[0:6])
 
         return(header,sortedDataClipped)
-        # return(header,sortedData)
 
-    def get_papers_ascend(self):
-
+    def get_col_order(self,col,order):
+        colName=["papers", "journals", "books", "chapter", "total"]
         collection=self.get_publications_by_author()
         header=collection[0]
         data=collection[1]
 
-        def by_Paper(t):
-            return t[1]
-        sortedData = sorted(data,key = by_Paper)
-        return(header,sortedData)
+        def by_colName(t):
+            for i in range(len(col)):
+                if colName[i]==col:
+                    return t[i+1]
 
-    def get_journals_ascend(self):
+        if order=="ascend":
+            sortedData = sorted(data,key = by_colName)
+        if order=="descend":
+            sortedData = sorted(data,key = by_colName,reverse=True)
 
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Journal(t):
-            return t[2]
-        sortedData = sorted(data,key = by_Journal)
-        return(header,sortedData)
-
-    def get_books_ascend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Books(t):
-            return t[3]
-        sortedData = sorted(data,key = by_Books)
-        return(header,sortedData)
-
-    def get_chapter_ascend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Chapter(t):
-            return t[4]
-        sortedData = sorted(data,key = by_Chapter)
-        return(header,sortedData)
-
-    def get_total_ascend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Total(t):
-            return t[5]
-        sortedData = sorted(data,key = by_Total)
-        return(header,sortedData)
-
-
-    def get_author_descend(self):
-
-        collection=self.get_publications_by_author_for_lName_sorting()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Author(t):
-            return t[7]
-        sortedData = sorted(data,key = by_Author,reverse=True)
-        sortedDataClipped =[]
-        for datum in sortedData:
-            sortedDataClipped.append(datum[0:6])
-
-        return(header,sortedDataClipped)
-        # return(header,sortedData)
-
-    def get_papers_descend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Paper(t):
-            return t[1]
-        sortedData = sorted(data,key = by_Paper,reverse=True)
-        return(header,sortedData)
-
-    def get_journals_descend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Journal(t):
-            return t[2]
-        sortedData = sorted(data,key = by_Journal,reverse=True)
-        return(header,sortedData)
-
-    def get_books_descend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Books(t):
-            return t[3]
-        sortedData = sorted(data,key = by_Books,reverse=True)
-        return(header,sortedData)
-
-    def get_chapter_descend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Chapter(t):
-            return t[4]
-        sortedData = sorted(data,key = by_Chapter,reverse=True)
-        return(header,sortedData)
-
-    def get_total_descend(self):
-
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Total(t):
-            return t[5]
-        sortedData = sorted(data,key = by_Total,reverse=True)
         return(header,sortedData)
 
     def get_average_authors_per_publication_by_year(self, av):
@@ -551,95 +424,37 @@ class Database:
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]+[self.authors[i].firstName]+[self.authors[i].lastName]
             for i in range(len(astats)) ]
         return (header, data)
-    
-    def get_appearingauthor_ascend(self):
+
+    def get_appearingauthor_order(self,order):
         collection = self.get_author_totals_by_appearingtimes_lName_sorting()
         header=collection[0]
         data=collection[1]
+        if order=="ascend":
+            sortedData = sorted(data,key = lambda x:x[5])
+            sortedDataClipped =[]
+        if order=="descend":
+            sortedData = sorted(data,key = lambda x:x[5],reverse=True)
+            sortedDataClipped =[]
 
-        def by_Author(t):
-            return t[5]
-
-        sortedData = sorted(data,key = by_Author)
-        sortedDataClipped =[]
         for datum in sortedData:
             sortedDataClipped.append(datum[0:4])
 
         return(header,sortedDataClipped)
 
-    def get_appearingauthor_descend(self):
-        collection = self.get_author_totals_by_appearingtimes_lName_sorting()
-        header=collection[0]
-        data=collection[1]
-
-        def by_Author(t):
-            return t[5]
-
-        sortedData = sorted(data,key = by_Author,reverse=True)
-        sortedDataClipped =[]
-        for datum in sortedData:
-            sortedDataClipped.append(datum[0:4])
-
-        return(header,sortedDataClipped)
-
-    def get_firstAppearingTimes_ascend(self):
+    def get_appearingcol_order(self,col,order):
+        colName=["firstAppearingTimes", "lastAppearingTimes","total"]
         collection=self.get_author_totals_by_appearingtimes()
         header=collection[0]
         data=collection[1]
+        def by_colName(t):
+            for i in range(len(col)):
+                if colName[i]==col:
+                    return t[i+1]
+        if order=="ascend":
+            sortedData = sorted(data,key = by_colName)
+        if order=="descend":
+            sortedData = sorted(data,key = by_colName,reverse=True)
 
-        def by_first(t):
-            return t[1]
-        sortedData = sorted(data,key = by_first)
-        return(header,sortedData)
-
-    def get_firstAppearingTimes_descend(self):
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-
-        def by_first(t):
-            return t[1]
-        sortedData = sorted(data,key = by_first,reverse=True)
-        return(header,sortedData)
-
-    def get_lastAppearingTimes_ascend(self):
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-
-        def by_last(t):
-            return t[2]
-        sortedData = sorted(data,key = by_last)
-        return(header,sortedData)
-
-    def get_lastAppearingTimes_descend(self):
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-
-        def by_last(t):
-            return t[2]
-        sortedData = sorted(data,key = by_last,reverse=True)
-        return(header,sortedData)
-
-    def get_lastAppearingTimesTotal_ascend(self):
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-
-        def by_total(t):
-            return t[3]
-        sortedData = sorted(data,key = by_total)
-        return(header,sortedData)
-
-    def get_lastAppearingTimesTotal_descend(self):
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-
-        def by_total(t):
-            return t[3]
-        sortedData = sorted(data,key = by_total,reverse=True)
         return(header,sortedData)
 
     def add_publication(self, pub_type, title, year, authors):
