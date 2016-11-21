@@ -147,5 +147,14 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(data[0][1], 2,
             "incorrect number of authors in result")
 
+
+    def test_get_author_totals_by_appearingtimes(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"sprint-2-acceptance-2.xml")))
+        header, data = db.get_author_totals_by_appearingtimes()
+        self.assertEqual(len(header),len(data[0]),"header and data column size doesn't match")
+        self.assertEqual(data[0][1], 3, "incorrect number of times the author appears as first authro")
+        self.assertEqual(data[0][3], 1, "incorrect Number of appearances as sole author")
+
 if __name__ == '__main__':
     unittest.main()

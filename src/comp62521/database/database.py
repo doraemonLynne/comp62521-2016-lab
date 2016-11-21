@@ -398,15 +398,18 @@ class Database:
         return (header, data)
 
     def get_author_totals_by_appearingtimes(self):
-        header = ("Author", "Number of times first author", "Number of times last author", "Total")
+        header = ("Author", "Number of times first author", "Number of times last author",
+        "Number of Sole-Authored Papers","Total")
 
-        astats = [ [0, 0] for _ in range(len(self.authors)) ]
+        astats = [ [0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
             for a in p.authors:
                 if a==p.authors[0]:
                     astats[a][0]+=1
                 if a==p.authors[-1]:
                     astats[a][1]+=1
+                if len(p.authors)==1:
+                    astats[a][2]+=1
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header, data)
@@ -574,6 +577,7 @@ class DocumentHandler(handler.ContentHandler):
             self.clearData()
         self.tag = None
         self.chrs = ""
+
 
     def characters(self, chrs):
         if self.pub_type != None:
