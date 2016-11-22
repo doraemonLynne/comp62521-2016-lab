@@ -104,7 +104,7 @@ class TestDatabase(unittest.TestCase):
     def test_get_publications_by_author(self):
         db = database.Database()
         self.assertTrue(db.read(path.join(self.data_dir, "simple.xml")))
-        header, data = db.get_publications_by_author()
+        header, data, dataIncludeLastName = db.get_publications_by_author()
         self.assertEqual(len(header), len(data[0]),
             "header and data column size doesn't match")
         self.assertEqual(len(data), 2,
@@ -151,10 +151,39 @@ class TestDatabase(unittest.TestCase):
     def test_get_author_totals_by_appearingtimes(self):
         db = database.Database()
         self.assertTrue(db.read(path.join(self.data_dir,"sprint-2-acceptance-2.xml")))
-        header, data = db.get_author_totals_by_appearingtimes()
+        header, data, dataIncludeLastName = db.get_author_totals_by_appearingtimes()
         self.assertEqual(len(header),len(data[0]),"header and data column size doesn't match")
         self.assertEqual(data[0][1], 3, "incorrect number of times the author appears as first authro")
         self.assertEqual(data[0][3], 1, "incorrect Number of appearances as sole author")
+
+    def test_get_author_search_details(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"dblp_curated_sample.xml")))
+        header, data, dataIncludeLastName = db.get_author_search_details()
+        self.assertEqual(len(header),len(data[0]),"header and data column size doesn't match")
+        self.assertEqual(data[0][0], "Stefano Ceri", "incorrect author")
+        self.assertEqual(data[0][1], 100, "incorrect number of conference papers")
+        self.assertEqual(data[0][2], 94, "incorrect number of journals")
+        self.assertEqual(data[0][3], 6, "incorrect number of books")
+        self.assertEqual(data[0][4], 18, "incorrect number of book chapters")
+        self.assertEqual(data[0][5], 218, "incorrect number of total publications")
+        self.assertEqual(data[0][6], 86, "incorrect number of times first author")
+        self.assertEqual(data[0][7], 33, "incorrect number of times last author")
+        self.assertEqual(data[0][8], 230, "incorrect number of coauthors")
+
+    def test_get_author_search(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"dblp_curated_sample.xml")))
+        header, data = db.get_author_search("Stefano Ceri")
+        self.assertEqual(len(data),1,"incorrect number of data")
+        header, data = db.get_author_search("Stefano")
+        self.assertEqual(len(data),5,"incorrect number of data")
+        header, data = db.get_author_search("Ceri")
+        self.assertEqual(len(data),2,"incorrect number of data")
+        header, data = db.get_author_search("")
+        self.assertEqual(len(data),1139,"incorrect number of data")
+        header, data = db.get_author_search("abc")
+        self.assertEqual(len(data),0,"incorrect number of data")
 
 if __name__ == '__main__':
     unittest.main()
