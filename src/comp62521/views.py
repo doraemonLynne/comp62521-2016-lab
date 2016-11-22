@@ -126,18 +126,19 @@ def showAppearingTimes():
     col= request.args.get('col')
     order=request.args.get('order')
     args = {"dataset":dataset, "id":col and order}
+    details=db.get_author_totals_by_appearingtimes()
     if col and order:
-        if col=="author":
-            args["title"] = "author"+"-"+order
-            args["data"] = db.get_appearingauthor_order(order)
+        if col=="Author":
+            args["title"] = "Author"+"-"+order
+            args["data"] = db.get_author_order(order,details)
         else:
             args["title"] = col+"-"+order
-            args["data"] = db.get_appearingcol_order(col,order)
-        return render_template('appearingTimes.html', args=args)
+            args["data"] = db.get_col_order(col,order,details)
     else:
         args["title"] = "Author by AppearingTimes"
         args["data"] = db.get_author_totals_by_appearingtimes()
-        return render_template('appearingTimes.html', args=args)
+
+    return render_template('appearingTimesSortable.html', args=args)
 
 @app.route("/statisticsdetails/publication_author_sortable")
 def showPublicationSortable():
@@ -146,29 +147,39 @@ def showPublicationSortable():
     col= request.args.get('col')
     order=request.args.get('order')
     args = {"dataset":dataset, "id":col and order}
+    details=db.get_publications_by_author()
     if col and order:
-        if col=="author":
-            args["title"] = "author"+"-"+order
-            args["data"] = db.get_author_order(order)
+        if col=="Author":
+            args["title"] = "Author"+"-"+order
+            args["data"] = db.get_author_order(order,details)
         else:
             args["title"] = col+"-"+order
-            args["data"] = db.get_col_order(col,order)
-        return render_template('statisticsdetails2.html', args=args)
-
+            args["data"] = db.get_col_order(col,order,details)
     else:
         args["title"] = "Author Publication"
         args["data"] = db.get_publications_by_author()
-        return render_template('statisticsdetails2.html', args=args)
+
+    return render_template('statisticsdetailsSortable.html', args=args)
 
 @app.route("/statisticsdetails/author_search")
 def showAuthorSearch():
     dataset = app.config['DATASET']
     db = app.config['DATABASE']
     searchText= request.args.get('searchText')
+    col=request.args.get('col')
+    order=request.args.get('order')
+    details=db.get_author_search_details()
     args = {"dataset":dataset, "id":"authorSearch"}
     if searchText:   
         args["title"] = "Author Search"
         args["data"] = db.get_author_search(searchText)
+    elif col and order:
+        if col=="Author":
+            args["title"] = "Author"+"-"+order
+            args["data"] = db.get_author_order(order,details)
+        else:
+            args["title"] = col+"-"+order
+            args["data"] = db.get_col_order(col,order,details)
     else:
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()

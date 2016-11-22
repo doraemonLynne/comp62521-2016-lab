@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ args.title }}{% endblock %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 <h1>{{ args.title }}</h1>
 {% for table in args.tables %}
 <h2>{{ table.title }}</h2>

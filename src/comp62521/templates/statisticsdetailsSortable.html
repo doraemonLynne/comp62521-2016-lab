@@ -5,26 +5,22 @@
 $(function() {
     var order = ["ascend", "descend"];
     var url = window.location.search;
-
+    
     $("thead tr th a").each(function(index, el) {
         $(this).click(function() {
-            var colName = $(this).text();
-            colName = colName.replace(/[ ]/g, "");
-            $(this).attr("href", "/statisticsdetails/author_search?col=" + colName + "&order=" + order[0]);
+            var colName=$(this).text();
+            colName=colName.replace(/[ ]/g,"");
+            $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName + "&order=" + order[0]);
             if (url == ("?col=" + colName + "&order=" + order[0])) {
-                $(this).attr("href", "/statisticsdetails/author_search?col=" + colName + "&order=" + order[1]);
+                $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName + "&order=" + order[1]);
             }
             if (url == ("?col=" + colName + "&order=" + order[1])) {
-                $(this).attr("href", "/statisticsdetails/author_search?col=" + colName + "&order=" + order[0]);
+                $(this).attr("href", "/statisticsdetails/publication_author_sortable?col=" + colName + "&order=" + order[0]);
             }
         })
     })
 })
 </script>
-<form name="authorSearch" action="/statisticsdetails/author_search" method="get" class="authorSearch">
-    <input type="text" name="searchText" id="searchText" maxlength="50">
-    <button>Search</button>
-</form>
 <h1>{{ args.title }}</h1>
 <table>
     <thead>

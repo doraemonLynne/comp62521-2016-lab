@@ -1,5 +1,6 @@
 from comp62521.statistics import average
 import itertools
+import operator
 import numpy as np
 from xml.sax import handler, make_parser, SAXException
 
@@ -220,9 +221,9 @@ class Database:
         return (header, data)
 
     def get_publications_by_author(self):
-        header = ("Author", "Number of conference papers",
+        header = ["Author", "Number of conference papers",
             "Number of journals", "Number of books",
-            "Number of book chapers", "Total")
+            "Number of book chapers", "Total"]
 
         astats = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
@@ -230,12 +231,13 @@ class Database:
                 astats[a][p.pub_type] += 1
 
         data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] for i in range(len(astats))]
-        return (header, data)
+        dataIncludeLastName = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] + [self.authors[i].lastName] for i in range(len(astats))]
+        return (header, data, dataIncludeLastName)
 
     def get_author_search_details(self):
-        header = ("Author", "Number of conference papers",
+        header = ["Author", "Number of conference papers",
             "Number of journals", "Number of books",
-            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors")
+            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors"]
 
         astatsPub = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
@@ -259,59 +261,46 @@ class Database:
                             coauthors[a] = set([a2])
 
         data = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] for i in range(len(astatsPub))]
-        return (header, data)
+        dataIncludeLastName = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] + [self.authors[i].lastName] for i in range(len(astatsPub))]
+        return (header, data, dataIncludeLastName)
 
     def get_author_search(self,searchText):
         collection = self.get_author_search_details()
         header=collection[0]
         data=collection[1]
 
-        data=[data[i] for i in range(len(data)) if self.authors[i].name==searchText]
+        # data=[data[i] for i in range(len(data)) if self.authors[i].name==searchText]
+        data=[data[i] for i in range(len(data)) if searchText in self.authors[i].name]
 
         return (header, data)
 
-    def get_publications_by_author_for_lName_sorting(self):
-        header = ("Author", "Number of conference papers",
-            "Number of journals", "Number of books",
-            "Number of book chapers", "Total")
-
-        astats = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
-        for p in self.publications:
-            for a in p.authors:
-                astats[a][p.pub_type] += 1
-
-        data = [[self.authors[i].name]+ astats[i] + [sum(astats[i])] +[self.authors[i].firstName]+[self.authors[i].lastName] for i in range(len(astats))]
-        return (header, data)
-
-
-    def get_author_order(self,order):
-        collection = self.get_publications_by_author_for_lName_sorting()
+    def get_author_order(self,order,details):
+        collection = details
         header=collection[0]
-        data=collection[1]
+        data=collection[2]
 
         if order=="ascend":
-            sortedData = sorted(data,key = lambda x:x[7])
+            sortedData = sorted(data,key = lambda x:x[len(header)])
             sortedDataClipped =[]
         if order=="descend":
-            sortedData = sorted(data,key = lambda x:x[7],reverse=True)
+            sortedData = sorted(data,key = lambda x:x[len(header)],reverse=True)
             sortedDataClipped =[]
 
         for datum in sortedData:
-            sortedDataClipped.append(datum[0:6])
+            sortedDataClipped.append(datum[0:len(header)])
 
         return(header,sortedDataClipped)
 
-    def get_col_order(self,col,order):
-        colName=["papers", "journals", "books", "chapter", "total"]
-        collection=self.get_publications_by_author()
-        header=collection[0]
-        data=collection[1]
-
+    def get_col_order(self,col,order,details):
+        collection=details
+        header=tuple(collection[0])
+        data=collection[1] 
+        colName=collection[0]
         def by_colName(t):
-            for i in range(len(col)):
+            for i in range(len(colName)):
+                colName[i]=colName[i].replace(' ','')
                 if colName[i]==col:
-                    return t[i+1]
-
+                    return t[i]
         if order=="ascend":
             sortedData = sorted(data,key = by_colName)
         if order=="descend":
@@ -398,8 +387,8 @@ class Database:
         return (header, data)
 
     def get_author_totals_by_appearingtimes(self):
-        header = ("Author", "Number of times first author", "Number of times last author",
-        "Number of Sole-Authored Papers","Total")
+        header = ["Author", "Number of times first author", "Number of times last author",
+        "Number of Sole-Authored Papers","Total"]
 
         astats = [ [0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
@@ -412,53 +401,9 @@ class Database:
                     astats[a][2]+=1
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
-        return (header, data)
-
-    def get_author_totals_by_appearingtimes_lName_sorting(self):
-        header = ("Author", "Number of times first author", "Number of times last author", "Total")
-
-        astats = [ [0, 0] for _ in range(len(self.authors)) ]
-        for p in self.publications:
-            for a in p.authors:
-                if a==p.authors[0]:
-                    astats[a][0]+=1
-                if a==p.authors[-1]:
-                    astats[a][1]+=1
-        data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]+[self.authors[i].firstName]+[self.authors[i].lastName]
-            for i in range(len(astats)) ]
-        return (header, data)
-
-    def get_appearingauthor_order(self,order):
-        collection = self.get_author_totals_by_appearingtimes_lName_sorting()
-        header=collection[0]
-        data=collection[1]
-        if order=="ascend":
-            sortedData = sorted(data,key = lambda x:x[5])
-            sortedDataClipped =[]
-        if order=="descend":
-            sortedData = sorted(data,key = lambda x:x[5],reverse=True)
-            sortedDataClipped =[]
-
-        for datum in sortedData:
-            sortedDataClipped.append(datum[0:4])
-
-        return(header,sortedDataClipped)
-
-    def get_appearingcol_order(self,col,order):
-        colName=["firstAppearingTimes", "lastAppearingTimes","total"]
-        collection=self.get_author_totals_by_appearingtimes()
-        header=collection[0]
-        data=collection[1]
-        def by_colName(t):
-            for i in range(len(col)):
-                if colName[i]==col:
-                    return t[i+1]
-        if order=="ascend":
-            sortedData = sorted(data,key = by_colName)
-        if order=="descend":
-            sortedData = sorted(data,key = by_colName,reverse=True)
-
-        return(header,sortedData)
+        dataIncludeLastName = [ [self.authors[i].name] + astats[i] + [sum(astats[i])] + [self.authors[i].lastName]
+        for i in range(len(astats)) ]
+        return (header, data, dataIncludeLastName)
 
     def add_publication(self, pub_type, title, year, authors):
         if year == None or len(authors) == 0:

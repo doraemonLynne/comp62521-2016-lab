@@ -2,15 +2,7 @@
 {% block title %}{{ args.title }}{% endblock %}
 {% block content %}
 
-<style type="text/css">
-  thead th,tbody td{
-    border: 1px solid #eaeaea;
-    padding: 5px;
-  }
-  table tbody td{
-    text-align: center;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 
 <h1>{{ args.title }}</h1>
 
