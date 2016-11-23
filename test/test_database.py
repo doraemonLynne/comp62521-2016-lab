@@ -197,5 +197,25 @@ class TestDatabase(unittest.TestCase):
         header, data = db.get_author_order(order,details)
         self.assertEqual(data,[[u'Krishna G. Kulkarni', 1, 0, 0, 0, 1], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Stefano Ceri', 2, 0, 0, 0, 2]])
         self.assertNotEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+
+    def test_get_col_order(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"three-authors-and-three-publications.xml")))
+        details=db.get_publications_by_author()
+        col = "firstAppearingTimes"
+        order="ascend"
+        one = 1
+        header, data = db.get_col_order(col,order,details)
+        self.assertEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1], [u'Valeria De Antonellis', 1, 0, 0, 0, 1]])
+        self.assertNotEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+        order="descend"
+        header, data = db.get_author_order(order,details)
+        self.assertEqual(data, [[u'Krishna G. Kulkarni', 1, 0, 0, 0, 1], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Stefano Ceri', 2, 0, 0, 0, 2]])
+        self.assertNotEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+        col = "firstAppearingTimes"
+        header, data = db.get_author_order(order,details)
+        self.assertEqual(data, [[u'Krishna G. Kulkarni', 1, 0, 0, 0, 1], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Stefano Ceri', 2, 0, 0, 0, 2]])
+        self.assertNotEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+
 if __name__ == '__main__':
     unittest.main()
