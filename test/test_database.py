@@ -153,7 +153,7 @@ class TestDatabase(unittest.TestCase):
         self.assertTrue(db.read(path.join(self.data_dir,"sprint-2-acceptance-2.xml")))
         header, data, dataIncludeLastName = db.get_author_totals_by_appearingtimes()
         self.assertEqual(len(header),len(data[0]),"header and data column size doesn't match")
-        self.assertEqual(data[0][1], 3, "incorrect number of times the author appears as first authro")
+        self.assertEqual(data[0][1], 3, "incorrect number of times the author appears as first author")
         self.assertEqual(data[0][3], 1, "incorrect Number of appearances as sole author")
 
     def test_get_author_search_details(self):
@@ -185,5 +185,17 @@ class TestDatabase(unittest.TestCase):
         header, data = db.get_author_search("abc")
         self.assertEqual(len(data),0,"incorrect number of data")
 
+    def test_get_author_order(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"three-authors-and-three-publications.xml")))
+        details=db.get_publications_by_author()
+        order="ascend"
+        header, data = db.get_author_order(order,details)
+        self.assertNotEqual(data,[[u'Valeria De Antonellis', 2, 0, 0, 0, 2], [u'Stefano Ceri', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+        self.assertEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
+        order="descend"
+        header, data = db.get_author_order(order,details)
+        self.assertEqual(data,[[u'Krishna G. Kulkarni', 1, 0, 0, 0, 1], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Stefano Ceri', 2, 0, 0, 0, 2]])
+        self.assertNotEqual(data,[[u'Stefano Ceri', 2, 0, 0, 0, 2], [u'Valeria De Antonellis', 1, 0, 0, 0, 1], [u'Krishna G. Kulkarni', 1, 0, 0, 0, 1]])
 if __name__ == '__main__':
     unittest.main()
