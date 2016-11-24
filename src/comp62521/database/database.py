@@ -248,10 +248,11 @@ class Database:
         astatsAuthor = [ [0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
             for a in p.authors:
-                if a==p.authors[0]:
-                    astatsAuthor[a][0]+=1
-                if a==p.authors[-1]:
-                    astatsAuthor[a][1]+=1
+                if len(p.authors)!=1:
+                    if a==p.authors[0]:
+                        astatsAuthor[a][0]+=1
+                    if a==p.authors[-1]:
+                        astatsAuthor[a][1]+=1
                 for a2 in p.authors:
                     if a != a2:
                         try:
@@ -393,11 +394,12 @@ class Database:
         astats = [ [0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
             for a in p.authors:
-                if a==p.authors[0]:
-                    astats[a][0]+=1
-                if a==p.authors[-1]:
-                    astats[a][1]+=1
-                if len(p.authors)==1:
+                if len(p.authors)!=1:
+                    if a==p.authors[0]:
+                        astats[a][0]+=1
+                    if a==p.authors[-1]:
+                        astats[a][1]+=1
+                elif len(p.authors)==1:
                     astats[a][2]+=1
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
