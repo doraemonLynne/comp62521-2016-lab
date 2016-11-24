@@ -270,7 +270,7 @@ class Database:
         header=collection[0]
         data=collection[1]
 
-        # data=[data[i] for i in range(len(data)) if self.authors[i].name==searchText]
+        ##data=[data[i] for i in range(len(data)) if self.authors[i].name==searchText]
         data=[data[i] for i in range(len(data)) if searchText in self.authors[i].name]
 
         return (header, data)
