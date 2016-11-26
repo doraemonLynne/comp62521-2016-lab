@@ -1,4 +1,42 @@
 @charset "UTF-8";
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.nav{
+    margin: 0;
+    padding: 0;
+}
+
+.nav li{
+    color: #fff;
+    width: 250px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background: #52cfeb linear-gradient(#52cfeb, #42A2BC);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+}
+.nav a{
+    color: #fff;
+}
+
+#navigation a,
+.returnBtn {
+    margin: 10px 0 0 10px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 5px 20px;
+    background: rgb(243, 152, 57);
+    color: rgb(146, 88, 0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+}
+
+.coAuthor{
+    margin: 15px;
+}
+
 table {
     border-collapse: collapse;
     display: table;
@@ -12,7 +50,7 @@ td {
 }
 
 table td,
-table th{
+table th {
     padding: 10px;
 }
 

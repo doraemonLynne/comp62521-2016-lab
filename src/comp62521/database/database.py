@@ -237,7 +237,7 @@ class Database:
     def get_author_search_details(self):
         header = ["Author", "Number of conference papers",
             "Number of journals", "Number of books",
-            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Co-Authors"]
+            "Number of book chapers", "Total publications","Number of times first author","Number of times last author","Number of Sole-Authored Papers","Number of Co-Authors"]
 
         astatsPub = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
@@ -245,7 +245,7 @@ class Database:
                 astatsPub[a][p.pub_type] += 1
 
         coauthors = {}
-        astatsAuthor = [ [0, 0, 0] for _ in range(len(self.authors)) ]
+        astatsAuthor = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
             for a in p.authors:
                 if len(p.authors)!=1:
@@ -253,17 +253,55 @@ class Database:
                         astatsAuthor[a][0]+=1
                     if a==p.authors[-1]:
                         astatsAuthor[a][1]+=1
+                elif len(p.authors)==1:
+                    astatsAuthor[a][2]+=1
                 for a2 in p.authors:
                     if a != a2:
                         try:
                             coauthors[a].add(a2)
-                            astatsAuthor[a][2]=len(coauthors[a]);
+                            astatsAuthor[a][3]=len(coauthors[a]);
                         except KeyError:
                             coauthors[a] = set([a2])
 
         data = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] for i in range(len(astatsPub))]
         dataIncludeLastName = [[self.authors[i].name]+ astatsPub[i] + [sum(astatsPub[i])] + astatsAuthor[i] + [self.authors[i].lastName] for i in range(len(astatsPub))]
         return (header, data, dataIncludeLastName)
+
+    def get_author_details_publications_type(self,authorName):
+        header = ("","overall","journal articles","conference papers","books","book chapters")
+
+        coauthors = {}
+        coauthor = [[0] for _ in range(len(self.authors))]
+        apubstats = [[0, 0, 0, 0] for _ in range(len(self.authors))]
+        afirstats = [[0, 0, 0, 0] for _ in range(len(self.authors))]
+        alaststats = [[0, 0, 0, 0] for _ in range(len(self.authors))]
+        asolestats = [[0, 0, 0, 0] for _ in range(len(self.authors))]
+
+        for p in self.publications:
+            for a in p.authors:
+                apubstats[a][p.pub_type] += 1
+                if len(p.authors)!=1:
+                    if a==p.authors[0]:
+                        afirstats[a][p.pub_type] += 1
+                    if a==p.authors[-1]:
+                        alaststats[a][p.pub_type] += 1
+                elif len(p.authors)==1:
+                    asolestats[a][p.pub_type] += 1
+                for a2 in p.authors:
+                    if a != a2:
+                        try:
+                            coauthors[a].add(a2)
+                            coauthor[a][0]=len(coauthors[a])
+                        except KeyError:
+                            coauthors[a] = set([a2])
+        apubdata = [[sum(apubstats[i])]+apubstats[i] for i in range(len(apubstats)) if self.authors[i].name==authorName]
+        afirdata = [[sum(afirstats[i])]+afirstats[i] for i in range(len(afirstats)) if self.authors[i].name==authorName]
+        alastdata = [[sum(alaststats[i])]+alaststats[i] for i in range(len(alaststats)) if self.authors[i].name==authorName]
+        asoledata = [[sum(asolestats[i])]+asolestats[i] for i in range(len(asolestats)) if self.authors[i].name==authorName]
+        coauthordata = [coauthor[i] for i in range(len(coauthor)) if self.authors[i].name==authorName]
+
+        return (header, apubdata, afirdata, alastdata, asoledata, coauthordata)
+
 
     def get_author_search(self,searchText):
         collection = self.get_author_search_details()

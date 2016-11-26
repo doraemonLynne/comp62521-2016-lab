@@ -21,6 +21,13 @@ $(function() {
     })
 })
 </script>
+<script type="text/javascript">
+$(function(){
+    $("tbody tr td:nth-child(1)").click(function(){
+        $(this).find("a").attr("href","/statisticsdetails/authorDetailsPublicationType?autherName="+$(this).text());
+    })
+})
+</script>
 <form name="authorSearch" action="/statisticsdetails/author_search" method="get" class="authorSearch">
     <input type="text" name="searchText" id="searchText" maxlength="50">
     <button>Search</button>
@@ -38,7 +45,7 @@ $(function() {
         {% for row in args.data[1] %}
         <tr>
             {% for data_item in row %}
-            <td>{{ data_item }}</td>
+            <td><a href="#">{{ data_item }}<a></td>
             {% endfor %}
         </tr>
         {% endfor %}

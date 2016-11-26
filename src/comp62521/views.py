@@ -184,3 +184,27 @@ def showAuthorSearch():
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()
     return render_template('authorSearch.html', args=args)
+@app.route("/statisticsdetails/authorDetailsPublicationType")
+def showAuthorDetailsPubType():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    autherName=request.args.get('autherName')
+    args = {"dataset":dataset, "id":"authorDetailsPubType"}
+    if autherName:
+        args["title"] = autherName
+        args["data"] = db.get_author_details_publications_type(autherName)
+        return render_template('authorDetails.html',args=args)
+    else:
+        args["title"] = "Author Search"
+        args["data"] = db.get_author_search_details()
+        return render_template('authorSearch.html', args=args)
+
+
+
+
+
+
+
+
+
+
