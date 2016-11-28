@@ -317,7 +317,6 @@ class Database:
         collection = details
         header=collection[0]
         data=collection[2]
-
         if order=="ascend":
             sortedData = sorted(data,key = lambda x:x[len(header)])
             sortedDataClipped =[]
@@ -331,15 +330,17 @@ class Database:
         return(header,sortedDataClipped)
 
     def get_col_order(self,col,order,details):
+        preSortHeader, preSortData = self.get_author_order("ascend",details)
         collection=details
-        header=tuple(collection[0])
-        data=collection[1] 
-        colName=collection[0]
+        header=tuple(preSortHeader)
+        data=preSortData
+        colNames=preSortHeader
         def by_colName(t):
-            for i in range(len(colName)):
-                colName[i]=colName[i].replace(' ','')
-                if colName[i]==col:
+            for i in range(len(colNames)):
+                colNames[i]=colNames[i].replace(' ','')
+                if colNames[i]==col:
                     return t[i]
+
         if order=="ascend":
             sortedData = sorted(data,key = by_colName)
         if order=="descend":
