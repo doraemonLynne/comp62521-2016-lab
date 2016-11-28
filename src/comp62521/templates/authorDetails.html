@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ args.title }}{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+<a href="/statisticsdetails/author_search" class="returnBtn">return</a>
+<h1>Author Name: <b>{{ args.title }}</b></h1>
+
+<table>
+  <thead>
+    <tr>
+    {% for column in args.data[0] %}
+      <th>{{ column }}</th>
+    {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for row in args.data[1] %}
+    <tr>
+    <td>Number of publications</td>
+    {% for data_item in row %}
+      <td>{{ data_item }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  {% for row in args.data[2] %}
+    <tr>
+    <td>Number of times first author</td>
+    {% for data_item in row %}
+      <td>{{ data_item }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  {% for row in args.data[3] %}
+    <tr>
+    <td>Number of times last author</td>
+    {% for data_item in row %}
+      <td>{{ data_item }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  {% for row in args.data[4] %}
+    <tr>
+    <td>Number of times sole author</td>
+    {% for data_item in row %}
+      <td>{{ data_item }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% for row in args.data[5] %}
+{% for data_item in row %}
+<div class="coAuthor">
+<b>Number of co-authors: <i>{{ data_item }}</i></b>
+</div>
+{% endfor %}
+{% endfor %}
+{% endblock %}
