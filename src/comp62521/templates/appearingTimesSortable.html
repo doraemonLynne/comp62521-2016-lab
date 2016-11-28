@@ -21,6 +21,13 @@ $(function() {
     })
 })
 </script>
+<script type="text/javascript">
+$(function(){
+    $("tbody tr td:nth-child(1)").click(function(){
+        $(this).find("a").attr("href","/statisticsdetails/authorDetailsPublicationType?autherName="+$(this).text());
+    })
+})
+</script>
 <h1>{{ args.title }}</h1>
 <table>
     <thead>
@@ -34,7 +41,7 @@ $(function() {
         {% for row in args.data[1] %}
         <tr>
             {% for data_item in row %}
-            <td>{{ data_item }}</td>
+            <td><a href="#">{{ data_item }}</a></td>
             {% endfor %}
         </tr>
         {% endfor %}
