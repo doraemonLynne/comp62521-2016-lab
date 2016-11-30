@@ -268,7 +268,7 @@ class Database:
         return (header, data, dataIncludeLastName)
 
     def get_author_details_publications_type(self,authorName):
-        header = ("","overall","journal articles","conference papers","books","book chapters")
+        header = ("","overall","conference papers","journal articles","books","book chapters")
 
         coauthors = {}
         coauthor = [[0] for _ in range(len(self.authors))]
