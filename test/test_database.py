@@ -221,7 +221,7 @@ class TestDatabase(unittest.TestCase):
     def test_get_author_details_publications_type(self):
         db = database.Database()
         self.assertTrue(db.read(path.join(self.data_dir,"dblp_curated_sample.xml")))
-        header, apubdata, afirdata, alastdata, asoledata, coauthordata = db.get_author_details_publications_type("Carlo Batini")
+        header, apubdata, afirdata, alastdata, asoledata, coauthordata = db.get_author_details_publications_type("Carlo Batini") #test Carlo Batini
         self.assertEqual(apubdata[0][0], 10, "incorrect overall publications")
         self.assertEqual(apubdata[0][1], 6, "incorrect number of conference papers")
         self.assertEqual(apubdata[0][2], 3, "incorrect number of journal articles")
