@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ args.title }}{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+
+<script src="{{url_for('static', filename='jquery.js')}}"></script>
+
+<h1>{{ args.title }}</h1>
+
+<table>
+  <thead>
+    <tr>
+    {% for column in args.data[0] %}
+      <th>{{ column }}</th>
+    {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for row in args.data[1] %}
+    <tr>
+    {% for data_item in row %}
+      <td><a href="#">{{ data_item }}</a></td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script src="../static/highcharts.js"></script>
+<script src="../static/exporting.js"></script>
+<script type="text/javascript">
+  $(function () {
+    var year=[];
+    $("tbody tr td:nth-child(1)").each(function(){
+      year.push(parseInt($(this).text()));
+    });
+    var conference=[];
+    $("tbody tr td:nth-child(2)").each(function(){
+      conference.push(parseInt($(this).text()));
+    });
+    var journals=[];
+    $("tbody tr td:nth-child(3)").each(function(){
+      journals.push(parseInt($(this).text()));
+    });
+    var  books=[];
+    $("tbody tr td:nth-child(4)").each(function(){
+       books.push(parseInt($(this).text()));
+    });
+    var chapers=[];
+    $("tbody tr td:nth-child(5)").each(function(){
+      chapers.push(parseInt($(this).text()));
+    });
+    var Total=[];
+    $("tbody tr td:nth-child(6)").each(function(){
+      Total.push(parseInt($(this).text()));
+    });
+    Highcharts.chart('container', {
+        title: {
+            text: 'Author by Year',
+        },
+        xAxis: {
+            categories: year
+        },
+        yAxis: {
+            title: {
+                text: 'Number'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Number of conference papers',
+            data: conference
+        }, {
+            name: 'Number of journals',
+            data: journals
+        }, {
+            name: 'Number of books',
+            data: books
+        }, {
+            name: 'Number of book chapers',
+            data: chapers
+        }, {
+            name: 'Total',
+            data: Total
+        }]
+    });
+});
+</script>
+<div id="container"></div>
+{% endblock %}

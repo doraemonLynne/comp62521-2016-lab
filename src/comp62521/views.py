@@ -104,6 +104,7 @@ def showPublicationSummary(status):
     if (status == "publication_summary"):
         args["title"] = "Publication Summary"
         args["data"] = db.get_publication_summary()
+        return render_template('summary.html', args=args)
 
     if (status == "publication_author"):
         args["title"] = "Author Publication"
@@ -112,10 +113,12 @@ def showPublicationSummary(status):
     if (status == "publication_year"):
         args["title"] = "Publication by Year"
         args["data"] = db.get_publications_by_year()
+        return render_template('publicationYear.html', args=args)
 
     if (status == "author_year"):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
+        return render_template('authorYear.html', args=args)
 
     return render_template('statisticsdetails.html', args=args)
 
@@ -184,6 +187,7 @@ def showAuthorSearch():
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()
     return render_template('authorSearch.html', args=args)
+
 @app.route("/statisticsdetails/authorDetailsPublicationType")
 def showAuthorDetailsPubType():
     dataset = app.config['DATASET']
@@ -198,6 +202,7 @@ def showAuthorDetailsPubType():
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()
         return render_template('authorSearch.html', args=args)
+
 
 
 

@@ -2,6 +2,249 @@
 {% block title %}{{ args.title }}{% endblock %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+<script src="{{url_for('static', filename='jquery.js')}}"></script>
+<script src="../static/highcharts.js"></script>
+<script src="../static/exporting.js"></script>
+<script type="text/javascript">
+  $(function () {
+    var Average=[];
+    $("table:first tbody tr td:nth-child(1)").each(function(){
+      Average.push($(this).text());
+    });
+    var conference=[];
+    $("table:first tbody tr td:nth-child(2)").each(function(){
+      conference.push(parseFloat($(this).text()));
+    });
+    var journals=[];
+    $("table:first tbody tr td:nth-child(3)").each(function(){
+      journals.push(parseFloat($(this).text()));
+    });
+    var  books=[];
+    $("table:first tbody tr td:nth-child(4)").each(function(){
+       books.push(parseFloat($(this).text()));
+    });
+    var chapers=[];
+    $("table:first tbody tr td:nth-child(5)").each(function(){
+      chapers.push(parseFloat($(this).text()));
+    });
+    var Total=[];
+    $("table:first tbody tr td:nth-child(6)").each(function(){
+      Total.push(parseFloat($(this).text()));
+    });
+    Highcharts.chart('container1', {
+        title: {
+            text: 'Average Authors per Publication',
+        },
+        chart: {
+            type: 'column'
+        },
+        xAxis: {
+            categories: Average
+        },
+        yAxis: {
+            title: {
+                text: 'Number'
+            }
+        },
+        series: [{
+            name: 'Conference Paper',
+            data: conference
+        }, {
+            name: 'Journal',
+            data: journals
+        }, {
+            name: 'Book',
+            data: books
+        }, {
+            name: 'Book Chapter',
+            data: chapers
+        }, {
+            name: 'All Publications',
+            data: Total
+        }]
+    });
+});
+</script>
+<script type="text/javascript">
+  $(function () {
+    var Average=[];
+    $("table:eq(1) tbody tr td:nth-child(1)").each(function(){
+      Average.push($(this).text());
+    });
+    var conference=[];
+    $("table:eq(1) tbody tr td:nth-child(2)").each(function(){
+      conference.push(parseFloat($(this).text()));
+    });
+    var journals=[];
+    $("table:eq(1) tbody tr td:nth-child(3)").each(function(){
+      journals.push(parseFloat($(this).text()));
+    });
+    var  books=[];
+    $("table:eq(1) tbody tr td:nth-child(4)").each(function(){
+       books.push(parseFloat($(this).text()));
+    });
+    var chapers=[];
+    $("table:eq(1) tbody tr td:nth-child(5)").each(function(){
+      chapers.push(parseFloat($(this).text()));
+    });
+    var Total=[];
+    $("table:eq(1) tbody tr td:nth-child(6)").each(function(){
+      Total.push(parseFloat($(this).text()));
+    });
+    Highcharts.chart('container2', {
+        title: {
+            text: 'Average Publications per Author',
+        },
+        chart: {
+            type: 'column'
+        },
+        xAxis: {
+            categories: Average
+        },
+        yAxis: {
+            title: {
+                text: 'Number'
+            }
+        },
+        series: [{
+            name: 'Conference Paper',
+            data: conference
+        }, {
+            name: 'Journal',
+            data: journals
+        }, {
+            name: 'Book',
+            data: books
+        }, {
+            name: 'Book Chapter',
+            data: chapers
+        }, {
+            name: 'All Publications',
+            data: Total
+        }]
+    });
+});
+</script>
+<script type="text/javascript">
+  $(function () {
+    var Average=[];
+    $("table:eq(2) tbody tr td:nth-child(1)").each(function(){
+      Average.push($(this).text());
+    });
+    var conference=[];
+    $("table:eq(2) tbody tr td:nth-child(2)").each(function(){
+      conference.push(parseFloat($(this).text()));
+    });
+    var journals=[];
+    $("table:eq(2) tbody tr td:nth-child(3)").each(function(){
+      journals.push(parseFloat($(this).text()));
+    });
+    var  books=[];
+    $("table:eq(2) tbody tr td:nth-child(4)").each(function(){
+       books.push(parseFloat($(this).text()));
+    });
+    var chapers=[];
+    $("table:eq(2) tbody tr td:nth-child(5)").each(function(){
+      chapers.push(parseFloat($(this).text()));
+    });
+    var Total=[];
+    $("table:eq(2) tbody tr td:nth-child(6)").each(function(){
+      Total.push(parseFloat($(this).text()));
+    });
+    Highcharts.chart('container3', {
+        title: {
+            text: 'Average Publications per Author',
+        },
+        chart: {
+            type: 'column'
+        },
+        xAxis: {
+            categories: Average
+        },
+        yAxis: {
+            title: {
+                text: 'Number'
+            }
+        },
+        series: [{
+            name: 'Conference Paper',
+            data: conference
+        }, {
+            name: 'Journal',
+            data: journals
+        }, {
+            name: 'Book',
+            data: books
+        }, {
+            name: 'Book Chapter',
+            data: chapers
+        }, {
+            name: 'All Publications',
+            data: Total
+        }]
+    });
+});
+</script>
+<script type="text/javascript">
+  $(function () {
+    var Average=[];
+    $("table:eq(3) tbody tr td:nth-child(1)").each(function(){
+      Average.push($(this).text());
+    });
+    var conference=[];
+    $("table:eq(3) tbody tr td:nth-child(2)").each(function(){
+      conference.push(parseFloat($(this).text()));
+    });
+    var journals=[];
+    $("table:eq(3) tbody tr td:nth-child(3)").each(function(){
+      journals.push(parseFloat($(this).text()));
+    });
+    var  books=[];
+    $("table:eq(3) tbody tr td:nth-child(4)").each(function(){
+       books.push(parseFloat($(this).text()));
+    });
+    var chapers=[];
+    $("table:eq(3) tbody tr td:nth-child(5)").each(function(){
+      chapers.push(parseFloat($(this).text()));
+    });
+    var Total=[];
+    $("table:eq(3) tbody tr td:nth-child(6)").each(function(){
+      Total.push(parseFloat($(this).text()));
+    });
+    Highcharts.chart('container4', {
+        title: {
+            text: 'Average Authors in a Year',
+        },
+        chart: {
+            type: 'column'
+        },
+        xAxis: {
+            categories: Average
+        },
+        yAxis: {
+            title: {
+                text: 'Number'
+            }
+        },
+        series: [{
+            name: 'Conference Paper',
+            data: conference
+        }, {
+            name: 'Journal',
+            data: journals
+        }, {
+            name: 'Book',
+            data: books
+        }, {
+            name: 'Book Chapter',
+            data: chapers
+        }, {
+            name: 'All Publications',
+            data: Total
+        }]
+    });
+});
+</script>
 <h1>{{ args.title }}</h1>
 {% for table in args.tables %}
 <h2>{{ table.title }}</h2>
@@ -25,4 +268,8 @@
 </table>
 <br/>
 {% endfor %}
+<div class="tables" id="container1"></div>
+<div class="tables" id="container2"></div>
+<div class="tables" id="container3"></div>
+<div class="tables" id="container4"></div>
 {% endblock %}
