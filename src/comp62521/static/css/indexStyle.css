@@ -1,0 +1,238 @@
+@charset "UTF-8";
+nav {
+    height: 70px;
+    background: #515f67;
+    /*background: url(../images/brickwall.png);*/
+}
+
+nav .m-menu {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+nav .nav-fir:first-child {
+    border-left: 2px solid #fafafa;
+}
+
+nav .nav-fir {
+    width: 19.79%;
+    float: left;
+    border-right: 2px solid #fafafa;
+}
+
+nav .nav-fir a {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    line-height: 70px;
+    color: #fff;
+    font-size: 20px;
+    font-family: "Malayalam MN";
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    -ms-transition: color 0.3s;
+    -o-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+nav .nav-fir a:hover {
+    color: #23B6FA;
+}
+
+nav .nav-sec {
+    opacity: 0;
+    width: 100%;
+    margin: 0 auto;
+    background: #515f67;
+}
+
+nav .nav-sec a {
+    font-size: 15px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.g-content {
+    text-align: center;
+    color: #979797;
+    font-size: 23px;
+    font-family: "Malayalam MN";
+}
+
+.m-box {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+.m-intro-content {
+    background: #fafafa;
+    height: 100px;
+}
+
+.m-intro-content h1{
+    float: left;
+    margin-bottom: 20px;
+}
+.u-dataset{
+    position: relative;
+    bottom: 55px;
+}
+.m-intro-bg {
+    background: url(../images/pubBg.png);
+    height: 76px;
+}
+
+.m-main h2 {
+    display: inline-block;
+    text-align: center;
+    padding: 5px 0;
+    margin: 5px 0;
+    border-bottom: 5px solid #aaa;
+}
+
+.m-main i {
+    display: inline-block;
+    margin-top: 30px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.m-pub {
+    padding: 50px 0;
+}
+
+.m-pub a {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #666;
+}
+
+.pub-summary {
+    width: 800px;
+    margin: 50px auto;
+}
+
+.m-sum {
+    width: 50%;
+}
+
+.m-sum i {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 100%;
+    border: 3px solid #aaa;
+}
+
+.m-sum b {
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.m-year {
+    padding: 50px 0;
+    background: #515f67;
+    color: #fafafa;
+}
+
+.m-year h2 {
+    border-bottom: 5px solid #fafafa;
+}
+
+.m-year .m-charts {
+    margin-top: 20px;
+}
+
+.m-year img {
+    width: 550px;
+    height: 300px;
+}
+
+.m-author {
+    padding: 50px 0;
+    background: #4bcaff;
+    color: #fff;
+}
+
+.m-author h2 {
+    border-bottom: 5px solid #fff;
+}
+
+.author-part {
+    width: 25%;
+    float: left;
+}
+
+.author-part i {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    margin-left: 40%;
+    margin-bottom: 20px;
+    border:3px solid #fff;
+}
+
+.author-part a {
+	position: relative;
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    perspective: 1000px;
+}
+
+.author-part a span{
+	font-size: 16px;
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	padding: 10px;
+	position: relative;
+    display: inline-block;
+    padding: 0 14px;
+    background: #2195de;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.author-part a span::before{
+	position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0965a0;
+    content: attr(data-hover);
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    transition: background 0.3s;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+}
+.author-part a:hover span{
+	-webkit-transform: rotateX(90deg) translateY(-22px);
+    -moz-transform: rotateX(90deg) translateY(-22px);
+    transform: rotateX(90deg) translateY(-22px);
+}
+.author-part a:hover span::before{
+	background: #28a2ee; 
+}
+.author-part p{
+	margin-top: 20px;
+	font-size: 13px;
+}

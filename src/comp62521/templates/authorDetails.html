@@ -1,7 +1,5 @@
 {% extends "base.html" %} {% block title %}{{ args.title }}{% endblock %} {% block content %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-<script src="{{url_for('static', filename='jquery.js')}}"></script>
-<a href="/statisticsdetails/author_search" class="returnBtn">Return</a>
+<!-- <a href="/statisticsdetails/author_search" class="returnBtn">Return</a> -->
 <h1>Author Name: <b>{{ args.title }}</b></h1>
 <table id="datatable">
     <thead>
@@ -48,9 +46,6 @@
     <b>Number of co-authors: <i>{{ data_item }}</i></b>
 </div>
 {% endfor %} {% endfor %}
-<script src="../static/highcharts.js"></script>
-<script src="../static/exporting.js"></script>
-<script src="../static/data.js"></script>
 <script type="text/javascript">
 $(function() {
     Highcharts.chart('container', {

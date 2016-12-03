@@ -1,24 +1,84 @@
 <!doctype html>
 <html>
 
-  <head>
+<head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-  </head>
+    <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/function.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/indexStyle.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css">
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/highcharts.js"></script>
+    <script src="../static/js/exporting.js"></script>
+    <script src="../static/js/data.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $(".nav-fir").mouseenter(function() {
+            $(this).find(".nav-sec").animate({
+                opacity: '1'
+            }, 400)
+        })
+        $(".nav-fir").mouseleave(function() {
+            $(this).find(".nav-sec").animate({
+                opacity: '0'
+            }, 400)
+        })
+    })
+    </script>
+</head>
 
-  <body>
+<body>
     <div id="page">
-      <div id="header">
-        <h1>COMP62521: {{ args.dataset }}</h1>
-
-        <div id="navigation">
-          <a href="/">Home</a>
+        <div id="header">
+            <div id="navigation">
+                <nav>
+                    <div class="m-menu f-cb">
+                        <div class="nav-fir"><a href="/">Home</a></div>
+                        <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publication Summary</a></div>
+                        <div class="nav-fir">
+                            <a href="#">Year Data</a>
+                            <div class="nav-sec">
+                                <ul>
+                                    <li>
+                                        <a href="/statisticsdetails/publication_year">Publication by year</a>
+                                    </li>
+                                    <li>
+                                        <a href="/statisticsdetails/author_year">Author by year</a>
+                                    </li>
+                                    <li>
+                                        <a href="/averages">Averaged year data</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav-fir">
+                            <a href="#">Authors</a>
+                            <div class="nav-sec">
+                                <ul>
+                                    <li><a href="/coauthors">Co-authors</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="/statisticsdetails/publication_author_sortable">Publication by Author</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="/statisticsdetails/author_appearingtimes">Author by appearing times</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="/statisticsdetails/author_search">Author Search</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav-fir"><a href="#">Help</a></div>
+                    </div>
+                </nav>
+            </div>
         </div>
-      </div>
-
-      <div id="content">
-        {% block content %}{% endblock %}
-      </div>
+        <div id="content">
+        <h1>COMP62521: {{ args.dataset }}</h1>
+            {% block content %}{% endblock %}
+        </div>
     </div>
-  </body>
+</body>
+
 </html>

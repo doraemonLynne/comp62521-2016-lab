@@ -1,30 +1,4 @@
-{% extends "base.html" %}
-{% block title %}{{ args.title }}{% endblock %}
-{% block content %}
-
-<h1>{{ args.title }}</h1>
-
-<table>
-  <thead>
-    <tr>
-    {% for column in args.data[0] %}
-      <th>{{ column }}</th>
-    {% endfor %}
-    </tr>
-  </thead>
-
-  <tbody>
-  {% for row in args.data[1] %}
-    <tr>
-    {% for data_item in row %}
-      <td><a href="#">{{ data_item }}</a></td>
-    {% endfor %}
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script type="text/javascript">
-  $(function () {
+$(function () {
     var publications=[];
     $("tbody tr:nth-child(1) td").not(":first").each(function(){
       publications.push(parseInt($(this).text()));
@@ -57,7 +31,3 @@
         }]
     });
 });
-
-</script>
-<div id="container"></div>
-{% endblock %}

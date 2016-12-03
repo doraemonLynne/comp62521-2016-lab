@@ -2,10 +2,6 @@
 {% block title %}{{ args.title }}{% endblock %}
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-
-<script src="{{url_for('static', filename='jquery.js')}}"></script>
-
 <h1>{{ args.title }}</h1>
 
 <table>
@@ -27,8 +23,6 @@
   {% endfor %}
   </tbody>
 </table>
-<script src="../static/highcharts.js"></script>
-<script src="../static/exporting.js"></script>
 <script type="text/javascript">
   $(function () {
     var year=[];
