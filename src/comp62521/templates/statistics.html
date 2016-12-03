@@ -9,6 +9,23 @@
     <link rel="stylesheet" type="text/css" href="../static/css/indexStyle.css">
     <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css">
     <script type="text/javascript" src="../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../static/js/easing.js"></script>
+    <script type="text/javascript" src="../static/js/move-top.js"></script>
+    <script src="../static/js/highcharts.js"></script>
+    <script src="../static/js/exporting.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+        $(".scroll").click(function(event) {
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+    </script>
     <script type="text/javascript">
     $(function() {
         $(".nav-fir").mouseenter(function() {
@@ -23,6 +40,155 @@
         })
     })
     </script>
+    <script type=text/javascript>
+    $(function() {
+        $.getJSON('/index/totalPub', function(data) {
+            $(".totalPub").text(data.totalPub);
+        });
+        $.getJSON('/index/totalAuth', function(data) {
+            $(".totalAuth").text(data.totalAuth);
+        });
+    });
+    </script>
+    <script type="text/javascript">
+    $(function() {
+        $.ajax({
+            url: '/index/pubByYear',
+            type: 'GET',
+            async: true,
+            dataType: "json",
+            success: function(data) {
+                var Data = data.args.data[1];
+                var year = [];
+                var journals = [];
+                var books = [];
+                var conference = [];
+                var chapers = [];
+                var total = [];
+                for (i = 0; i < Data.length; i++) {
+                    year.push(parseInt(Data[i][0]));
+                    conference.push(parseInt(Data[i][1]));
+                    journals.push(parseInt(Data[i][2]));
+                    books.push(parseInt(Data[i][3]));
+                    chapers.push(parseInt(Data[i][4]));
+                    total.push(parseInt(Data[i][5]));
+                }
+                pubByYearData(year, conference, journals, books, chapers, total);
+            }
+        });
+
+        $.ajax({
+            url: '/index/authByYear',
+            type: 'GET',
+            async: true,
+            dataType: "json",
+            success: function(data) {
+                var Data = data.args.data[1];
+                var year = [];
+                var journals = [];
+                var books = [];
+                var conference = [];
+                var chapers = [];
+                var total = [];
+                for (i = 0; i < Data.length; i++) {
+                    year.push(parseInt(Data[i][0]));
+                    conference.push(parseInt(Data[i][1]));
+                    journals.push(parseInt(Data[i][2]));
+                    books.push(parseInt(Data[i][3]));
+                    chapers.push(parseInt(Data[i][4]));
+                    total.push(parseInt(Data[i][5]));
+                }
+                authByYearData(year, conference, journals, books, chapers, total);
+            }
+        });
+
+        function pubByYearData(year, conference, journals, books, chapers, total) {
+            Highcharts.chart('pubByYear', {
+                title: {
+                    text: 'Publication by Year',
+                },
+                xAxis: {
+                    categories: year
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: 'Number of conference papers',
+                    data: conference
+                }, {
+                    name: 'Number of journals',
+                    data: journals
+                }, {
+                    name: 'Number of books',
+                    data: books
+                }, {
+                    name: 'Number of book chapers',
+                    data: chapers
+                }, {
+                    name: 'Total',
+                    data: total
+                }]
+            });
+        }
+
+        function authByYearData(year, conference, journals, books, chapers, total) {
+            Highcharts.chart('authByYear', {
+                title: {
+                    text: 'Author by Year',
+                },
+                xAxis: {
+                    categories: year
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: 'Number of conference papers',
+                    data: conference
+                }, {
+                    name: 'Number of journals',
+                    data: journals
+                }, {
+                    name: 'Number of books',
+                    data: books
+                }, {
+                    name: 'Number of book chapers',
+                    data: chapers
+                }, {
+                    name: 'Total',
+                    data: total
+                }]
+            });
+        }
+    });
+    </script>
 </head>
 
 <body>
@@ -31,23 +197,7 @@
             <div class="nav-fir"><a href="/">Home</a></div>
             <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publication Summary</a></div>
             <div class="nav-fir">
-                <a href="#">Year Data</a>
-                <div class="nav-sec">
-                    <ul>
-                        <li>
-                            <a href="/statisticsdetails/publication_year">Publication by year</a>
-                        </li>
-                        <li>
-                            <a href="/statisticsdetails/author_year">Author by year</a>
-                        </li>
-                        <li>
-                            <a href="/averages">Averaged year data</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="nav-fir">
-                <a href="#">Authors</a>
+                <a href="#Authors" class="scroll">Authors</a>
                 <div class="nav-sec">
                     <ul>
                         <li><a href="/coauthors">Co-authors</a></li>
@@ -63,14 +213,30 @@
                     </ul>
                 </div>
             </div>
-            <div class="nav-fir"><a href="#">Help</a></div>
+            <div class="nav-fir">
+                <a href="#Year" class="scroll">Year Data</a>
+                <div class="nav-sec">
+                    <ul>
+                        <li>
+                            <a href="/statisticsdetails/publication_year">Publication by year</a>
+                        </li>
+                        <li>
+                            <a href="/statisticsdetails/author_year">Author by year</a>
+                        </li>
+                        <li>
+                            <a href="/averages">Averaged year data</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-fir"><a href="#Help">Help</a></div>
         </div>
     </nav>
     <div class="g-content">
         <div class="m-intro">
             <div class="m-intro-content">
                 <div class="m-box">
-                  <h1 class="u-dataset">COMP62521: {{ args.dataset }}</h1>
+                    <h1 class="u-dataset">COMP62521: {{ args.dataset }}</h1>
                 </div>
             </div>
             <div class="m-intro-bg"></div>
@@ -80,35 +246,23 @@
                 <div class="m-box">
                     <i class="fa fa-book fa-2x"></i>
                     <br>
-                    <h2>Publications</h2>
+                    <h2><a href="/statisticsdetails/publication_summary">Publications</a></h2>
                     <div class="pub-summary f-cb">
                         <div class="m-sum f-fl"><i class="fa fa-newspaper-o fa-2x"></i>
                             <br><b>Total Publications</b>
-                            <br><a href="#">6770</a></div>
+                            <br>
+                            <a href="#" class="totalPub"></a>
+                        </div>
                         <div class="m-sum f-fr"><i class="fa fa-user fa-2x"></i>
                             <br><b>Total Authors</b>
-                            <br><a href="#">111</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="m-year">
-                <div class="m-box">
-                    <i class="fa fa-table fa-2x"></i>
-                    <br>
-                    <h2>Year Data</h2>
-                    <div class="m-charts f-cb">
-                        <div class="m-charts-left f-fl">
-                            <img src="../static/images/chart.png">
-                            <h3>Publications by year</h3>
+                            <br>
+                            <a href="#" class="totalAuth"></a>
                         </div>
-                        <div class="m-charts-right f-fr">
-                            <img src="../static/images/chart1.png"></div>
-                        <h3>Authors by year</h3>
                     </div>
                 </div>
             </div>
-            <div class="m-author">
-                <div class="m-box">
+            <div class="m-author" id="Authors">
+                <div class="m-box f-cb">
                     <i class="fa fa-users fa-2x"></i>
                     <br>
                     <h2>Authors</h2>
@@ -136,8 +290,24 @@
                     </div>
                 </div>
             </div>
+            <div class="m-year" id="Year">
+                <div class="m-box">
+                    <i class="fa fa-table fa-2x"></i>
+                    <br>
+                    <h2>Year Data</h2>
+                    <div class="m-charts f-cb">
+                        <div class="m-charts-left f-fl">
+                            <h3><a href="/statisticsdetails/publication_year">Publications By Year</a></h3>
+                            <div id="pubByYear" class="chartPic"></div>
+                        </div>
+                        <div class="m-charts-right f-fr">
+                            <h3><a href="/statisticsdetails/author_year">Authors By Year</a></h3>
+                            <div id="authByYear" class="chartPic"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 </body>
 
 </html>

@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css">
     <script src="../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../static/js/move-top.js"></script>
+    <script type="text/javascript" src="../static/js/easing.js"></script>
     <script src="../static/js/highcharts.js"></script>
     <script src="../static/js/exporting.js"></script>
     <script src="../static/js/data.js"></script>
@@ -26,6 +28,19 @@
         })
     })
     </script>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+        $(".scroll").click(function(event) {
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -37,23 +52,7 @@
                         <div class="nav-fir"><a href="/">Home</a></div>
                         <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publication Summary</a></div>
                         <div class="nav-fir">
-                            <a href="#">Year Data</a>
-                            <div class="nav-sec">
-                                <ul>
-                                    <li>
-                                        <a href="/statisticsdetails/publication_year">Publication by year</a>
-                                    </li>
-                                    <li>
-                                        <a href="/statisticsdetails/author_year">Author by year</a>
-                                    </li>
-                                    <li>
-                                        <a href="/averages">Averaged year data</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="nav-fir">
-                            <a href="#">Authors</a>
+                            <a href="#Authors" class="scroll">Authors</a>
                             <div class="nav-sec">
                                 <ul>
                                     <li><a href="/coauthors">Co-authors</a></li>
@@ -69,16 +68,32 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="nav-fir"><a href="#">Help</a></div>
+                        <div class="nav-fir">
+                            <a href="#Year" class="scroll">Year Data</a>
+                            <div class="nav-sec">
+                                <ul>
+                                    <li>
+                                        <a href="/statisticsdetails/publication_year">Publication by year</a>
+                                    </li>
+                                    <li>
+                                        <a href="/statisticsdetails/author_year">Author by year</a>
+                                    </li>
+                                    <li>
+                                        <a href="/averages">Averaged year data</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav-fir"><a href="#Help" class="scroll">Help</a></div>
                     </div>
                 </nav>
             </div>
         </div>
         <div id="content">
-        <h1>COMP62521: {{ args.dataset }}</h1>
-            {% block content %}{% endblock %}
+            <h1>COMP62521: {{ args.dataset }}</h1> {% block content %}{% endblock %}
         </div>
     </div>
+    <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
 </body>
 
 </html>

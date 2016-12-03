@@ -1,8 +1,11 @@
 @charset "UTF-8";
 nav {
+    width: 100%;
     height: 70px;
-    background: #515f67;
-    /*background: url(../images/brickwall.png);*/
+    background: #515F74;
+    position: fixed;
+    top: 0;
+    z-index: 999;
 }
 
 nav .m-menu {
@@ -16,6 +19,7 @@ nav .nav-fir:first-child {
 
 nav .nav-fir {
     width: 19.79%;
+    height: 70px;
     float: left;
     border-right: 2px solid #fafafa;
 }
@@ -43,7 +47,7 @@ nav .nav-sec {
     opacity: 0;
     width: 100%;
     margin: 0 auto;
-    background: #515f67;
+    background: #515F74;
 }
 
 nav .nav-sec a {
@@ -55,7 +59,7 @@ nav .nav-sec a {
 .g-content {
     text-align: center;
     color: #979797;
-    font-size: 23px;
+    font-size: 20px;
     font-family: "Malayalam MN";
 }
 
@@ -69,14 +73,17 @@ nav .nav-sec a {
     height: 100px;
 }
 
-.m-intro-content h1{
-    float: left;
-    margin-bottom: 20px;
+.m-intro-content h1 {
+    position: relative;
+    top: 75px;
+    margin-top: 50px;
 }
-.u-dataset{
+
+.u-dataset {
     position: relative;
     bottom: 55px;
 }
+
 .m-intro-bg {
     background: url(../images/pubBg.png);
     height: 76px;
@@ -88,6 +95,11 @@ nav .nav-sec a {
     padding: 5px 0;
     margin: 5px 0;
     border-bottom: 5px solid #aaa;
+    font-size: 25px;
+}
+
+.m-main h2 a {
+    color: #aaa;
 }
 
 .m-main i {
@@ -102,8 +114,8 @@ nav .nav-sec a {
     padding: 50px 0;
 }
 
-.m-pub a {
-    font-size: 30px;
+.m-pub .m-sum a {
+    font-size: 25px;
     font-weight: bolder;
     color: #666;
 }
@@ -140,11 +152,16 @@ nav .nav-sec a {
     border-bottom: 5px solid #fafafa;
 }
 
+.m-year h3 a {
+    color: #fff;
+    margin: 10px 0;
+}
+
 .m-year .m-charts {
     margin-top: 20px;
 }
 
-.m-year img {
+.m-year .chartPic {
     width: 550px;
     height: 300px;
 }
@@ -171,27 +188,27 @@ nav .nav-sec a {
     display: block;
     margin-left: 40%;
     margin-bottom: 20px;
-    border:3px solid #fff;
+    border: 3px solid #fff;
 }
 
 .author-part a {
-	position: relative;
+    position: relative;
     display: inline-block;
     margin: 0 10px;
     color: #fff;
-    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     -webkit-perspective: 1000px;
     -moz-perspective: 1000px;
     perspective: 1000px;
 }
 
-.author-part a span{
-	font-size: 16px;
-	width: 200px;
-	height: 50px;
-	line-height: 50px;
-	padding: 10px;
-	position: relative;
+.author-part a span {
+    font-size: 16px;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    padding: 10px;
+    position: relative;
     display: inline-block;
     padding: 0 14px;
     background: #2195de;
@@ -206,8 +223,8 @@ nav .nav-sec a {
     transform-style: preserve-3d;
 }
 
-.author-part a span::before{
-	position: absolute;
+.author-part a span::before {
+    position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
@@ -224,15 +241,49 @@ nav .nav-sec a {
     -moz-transform-origin: 50% 0;
     transform-origin: 50% 0;
 }
-.author-part a:hover span{
-	-webkit-transform: rotateX(90deg) translateY(-22px);
+
+.author-part a:hover span {
+    -webkit-transform: rotateX(90deg) translateY(-22px);
     -moz-transform: rotateX(90deg) translateY(-22px);
     transform: rotateX(90deg) translateY(-22px);
 }
-.author-part a:hover span::before{
-	background: #28a2ee; 
+
+.author-part a:hover span::before {
+    background: #28a2ee;
 }
-.author-part p{
-	margin-top: 20px;
-	font-size: 13px;
+
+.author-part p {
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 10px;
+    right: 3%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border: none;
+    text-indent: 100%;
+    background: url("../images/arrow_up.png") no-repeat 50% 44% #2195de;
+    border-radius: 30em;
+}
+
+#toTopHover {
+    width: 40px;
+    height: 40px;
+    display: block;
+    overflow: hidden;
+    float: right;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#toTop:active,
+#toTop:focus {
+    outline: none;
 }

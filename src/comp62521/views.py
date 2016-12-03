@@ -95,6 +95,30 @@ def showStatisticsMenu():
     args = {"dataset":dataset}
     return render_template('statistics.html', args=args)
 
+@app.route("/index/<status>")
+def showIndexData(status):
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset}
+
+    if(status == "totalPub"):
+        args["title"] = "Publication Summary"
+        args["data"] = db.get_publication_summary()
+        return jsonify(totalPub=args["data"][1][0][1])
+    if(status == "totalAuth"):
+        args["title"] = "Publication Summary"
+        args["data"] = db.get_publication_summary()
+        return jsonify(totalAuth=args["data"][1][1][1])
+    if(status == "pubByYear"):
+        args["title"] = "Publication Summary"
+        args["data"] = db.get_publications_by_year()
+        return jsonify(args=args)
+    if(status == "authByYear"):
+        args["title"] = "Publication Summary"
+        args["data"] = db.get_author_totals_by_year()
+        return jsonify(args=args)
+    
+
 @app.route("/statisticsdetails/<status>")
 def showPublicationSummary(status):
     dataset = app.config['DATASET']
@@ -202,8 +226,6 @@ def showAuthorDetailsPubType():
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()
         return render_template('authorSearch.html', args=args)
-
-
 
 
 
