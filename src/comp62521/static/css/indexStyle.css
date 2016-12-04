@@ -327,3 +327,11 @@ nav .nav-sec a {
 #toTop:focus {
     outline: none;
 }
+
+footer{
+    padding: 30px;
+    text-align: center;
+    font-size: 30px;
+    background:rgb(124, 181, 236);
+    color: #fff;
+}

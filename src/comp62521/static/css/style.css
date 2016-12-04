@@ -115,7 +115,9 @@ table tbody {
 #content .dataSetName{
     display: none;
 }
-
+#page{
+    padding: 20px 0;
+}
 #content h1{
     color: rgb(124, 181, 236);
     font-size: 25px;
