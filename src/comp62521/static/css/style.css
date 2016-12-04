@@ -1,15 +1,70 @@
 @charset "UTF-8";
-body {
-    background: #fafafa;
+.m-box {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+nav {
+    width: 100%;
+    height: 70px;
+    background: #515F74;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+nav .m-menu {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+nav .nav-fir:first-child {
+    border-left: 2px solid #fafafa;
+}
+
+nav .nav-fir {
+    width: 15.9999%;
+    height: 70px;
+    float: left;
+    border-right: 2px solid #fafafa;
+}
+
+nav .nav-fir a {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    line-height: 70px;
+    color: #fff;
+    font-size: 20px;
+    font-family: "Malayalam MN";
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    -ms-transition: color 0.3s;
+    -o-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+nav .nav-fir a:hover {
+    color: #23B6FA;
+}
+
+nav .nav-sec {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    margin: 0 auto;
+    background: #515F74;
+}
+
+nav .nav-sec a {
+    font-size: 15px;
+    height: 30px;
+    line-height: 30px;
 }
 
 h1 {
     font-size: 20px;
     margin-bottom: 20px;
-}
-
-#content {
-    margin-top: 120px;
 }
 
 .returnBtn {
@@ -31,8 +86,7 @@ table {
     display: table;
 }
 
-table thead th{
-    /*background: rgb(124, 181, 236);*/
+table thead th {
     font-weight: bold;
 }
 
@@ -112,19 +166,17 @@ table tbody {
     width: 650px;
 }
 
-#content .dataSetName{
-    display: none;
+#content {
+    margin-top: 100px;
 }
-#page{
-    padding: 20px 0;
-}
-#content h1{
+
+#content h1 {
     color: rgb(124, 181, 236);
     font-size: 25px;
     font-family: "Malayalam MN";
 }
 
-.coauthorsForm{
+.coauthorsForm {
     color: #222;
     font-size: 16px;
     position: absolute;
@@ -132,8 +184,46 @@ table tbody {
     top: 170px;
 }
 
-#content .tableTitle{
+#content .tableTitle {
     color: #000;
     font-size: 20px;
     margin: 20px 0;
+}
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 10px;
+    right: 3%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border: none;
+    text-indent: 100%;
+    background: url("../images/arrow_up.png") no-repeat 50% 44% #2195de;
+    border-radius: 30em;
+}
+
+#toTopHover {
+    width: 40px;
+    height: 40px;
+    display: block;
+    overflow: hidden;
+    float: right;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#toTop:active,
+#toTop:focus {
+    outline: none;
+}
+
+footer{
+    padding: 30px;
+    text-align: center;
+    font-size: 30px;
+    background:rgb(124, 181, 236);
+    color: #fff;
 }

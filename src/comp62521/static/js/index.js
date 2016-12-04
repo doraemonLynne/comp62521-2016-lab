@@ -1,3 +1,6 @@
+$(function(){
+    $(".m-box").css("width","100%")
+});
 /**********
 Ease to nav
 **********/
@@ -12,24 +15,6 @@ $(function() {
         }, 1000);
     });
 });
-
-
-/**************
-Nav menu effect
-**************/
-$(function() {
-    $(".nav-fir").mouseenter(function() {
-        $(this).find(".nav-sec").animate({
-            "height": "170%",
-        }, 400)
-    })
-    $(".nav-fir").mouseleave(function() {
-        $(this).find(".nav-sec").animate({
-            "height": "0",
-        }, 400)
-    })
-});
-
 
 /*****************************
 Total Publications and authors

@@ -1,143 +1,95 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>navigation</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/function.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/indexStyle.css">
-    <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css">
-    <script type="text/javascript" src="../static/js/jquery.js"></script>
-    <script type="text/javascript" src="../static/js/easing.js"></script>
-    <script type="text/javascript" src="../static/js/move-top.js"></script>
-    <script src="../static/js/highcharts.js"></script>
-    <script src="../static/js/exporting.js"></script>
-    <script src="../static/js/index.js"></script>
-</head>
-
-<body>
-    <nav>
-        <div class="m-menu f-cb">
-            <div class="nav-fir"><a href="/">Home</a></div>
-            <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publication Summary</a></div>
-            <div class="nav-fir">
-                <a href="#Authors" class="scroll">Authors</a>
-                <div class="nav-sec">
-                    <ul>
-                        <li><a href="/coauthors">Co-authors</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="/statisticsdetails/publication_author_sortable">Publication by Author</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="/statisticsdetails/author_appearingtimes">Author by appearing times</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="/statisticsdetails/author_search">Author Search</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="nav-fir">
-                <a href="#Year" class="scroll">Year Data</a>
-                <div class="nav-sec">
-                    <ul>
-                        <li>
-                            <a href="/statisticsdetails/publication_year">Publication by year</a>
-                        </li>
-                        <li>
-                            <a href="/statisticsdetails/author_year">Author by year</a>
-                        </li>
-                        <li>
-                            <a href="/averages">Averaged year data</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="nav-fir"><a href="#Help">Help</a></div>
-        </div>
-    </nav>
-    <div class="g-content">
-        <div class="m-intro">
-            <div class="m-intro-content">
-                <div class="m-box">
-                    <h1 class="u-dataset">COMP62521: {{ args.dataset }}</h1>
-                </div>
-            </div>
-            <div class="m-intro-bg"></div>
-        </div>
-        <div class="m-main">
-            <div class="m-pub">
-                <div class="m-box">
-                    <i class="fa fa-book fa-2x"></i>
-                    <br>
-                    <h2><a href="/statisticsdetails/publication_summary">Publications</a></h2>
-                    <div class="pub-summary f-cb">
-                        <div class="m-sum f-fl"><i class="fa fa-newspaper-o fa-2x"></i>
-                            <br><b>Total Publications</b>
-                            <br>
-                            <a href="#" class="totalPub"></a>
-                        </div>
-                        <div class="m-sum f-fr"><i class="fa fa-user fa-2x"></i>
-                            <br><b>Total Authors</b>
-                            <br>
-                            <a href="#" class="totalAuth"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="m-author" id="Authors">
-                <div class="m-box f-cb">
-                    <i class="fa fa-users fa-2x"></i>
-                    <br>
-                    <h2>Authors</h2>
-                    <div class="m-auth-details f-cb">
-                        <div class="author-part">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="/coauthors"><span data-hover="Co-authors">Co-authors</span></a>
-                            <p>This is Co-authors Page</p>
-                        </div>
-                        <div class="author-part">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="/statisticsdetails/publication_author_sortable"><span data-hover="Publication by Author">Publication by Author</span></a>
-                            <p>This is Co-authors Page</p>
-                        </div>
-                        <div class="author-part">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="/statisticsdetails/author_appearingtimes"><span data-hover="Author by appearing times">Author by appearing times</span></a>
-                            <p>This is Co-authors Page</p>
-                        </div>
-                        <div class="author-part">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="/statisticsdetails/author_search"><span data-hover="Author search">Author search</span></a>
-                            <p>This is Co-authors Page</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="m-year" id="Year">
-                <div class="m-box">
-                    <i class="fa fa-table fa-2x"></i>
-                    <br>
-                    <h2>Year Data</h2>
-                    <div class="m-charts f-cb">
-                        <div class="m-charts-left f-fl">
-                            <h3><a href="/statisticsdetails/publication_year">Publications By Year</a></h3>
-                            <div id="pubByYear" class="chartPic"></div>
-                        </div>
-                        <div class="m-charts-right f-fr">
-                            <h3><a href="/statisticsdetails/author_year">Authors By Year</a></h3>
-                            <div id="authByYear" class="chartPic"></div>
-                        </div>
-                    </div>
-                </div>
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/indexStyle.css">
+<script src="../static/js/index.js"></script>
+<div class="g-content">
+    <div class="m-intro">
+        <div class="m-intro-content">
+            <div class="m-box">
+                <h1 class="u-dataset">COMP62521: {{ args.dataset }}</h1>
             </div>
         </div>
-        <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+        <div class="m-intro-bg"></div>
     </div>
-    <footer>
-        <p class="u-copy">&copy; 2016 Beedle. All Rights Reserved.</p>
-    </footer>
-</body>
-
-</html>
+    <div class="m-main">
+        <div class="m-pub">
+            <div class="m-box">
+                <i class="fa fa-book fa-2x"></i>
+                <br>
+                <h2><a href="/statisticsdetails/publication_summary">Publications</a></h2>
+                <div class="pub-summary f-cb">
+                    <div class="m-sum f-fl"><i class="fa fa-newspaper-o fa-2x"></i>
+                        <br><b>Total Publications</b>
+                        <br>
+                        <a href="#" class="totalPub"></a>
+                    </div>
+                    <div class="m-sum f-fr"><i class="fa fa-user fa-2x"></i>
+                        <br><b>Total Authors</b>
+                        <br>
+                        <a href="#" class="totalAuth"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-author" id="Authors">
+            <div class="m-box f-cb">
+                <i class="fa fa-users fa-2x"></i>
+                <br>
+                <h2>Authors</h2>
+                <div class="m-auth-details f-cb">
+                    <div class="author-part">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <a href="/statisticsdetails/publication_author_sortable"><span data-hover="Publication by Author">Publication by Author</span></a>
+                        <p>This is Co-authors Page</p>
+                    </div>
+                    <div class="author-part">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <a href="/statisticsdetails/author_appearingtimes"><span data-hover="Author by appearing times">Author by appearing times</span></a>
+                        <p>This is Co-authors Page</p>
+                    </div>
+                    <div class="author-part">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <a href="/statisticsdetails/author_search"><span data-hover="Author search">Author search</span></a>
+                        <p>This is Co-authors Page</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-coauthor" id="Co-authors">
+            <div class="m-box f-cb">
+                <i class="fa fa-handshake-o fa-2x"></i>
+                <br>
+                <h2>Co-authors</h2>
+                <div class="m-coauth-details f-cb">
+                    <div class="coauthor-part">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <a href="/coauthors">Co-author Details</a>
+                        <p>This is Co-authors Page</p>
+                    </div>
+                    <div class="coauthor-part">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <a href="/coauthorDegree">Co-author Degree</a>
+                        <p>This is Co-authors Page</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-year" id="Year">
+            <div style="width: 1170px;margin: 0 auto;">
+                <i class="fa fa-table fa-2x"></i>
+                <br>
+                <h2>Year Data</h2>
+                <div class="m-charts f-cb">
+                    <div class="m-charts-left f-fl">
+                        <h3><a href="/statisticsdetails/publication_year">Publications By Year</a></h3>
+                        <div id="pubByYear" class="chartPic"></div>
+                    </div>
+                    <div class="m-charts-right f-fr">
+                        <h3><a href="/statisticsdetails/author_year">Authors By Year</a></h3>
+                        <div id="authByYear" class="chartPic"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

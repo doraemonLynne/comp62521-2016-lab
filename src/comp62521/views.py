@@ -104,11 +104,11 @@ def showIndexData(status):
     if(status == "totalPub"):
         args["title"] = "Publication Summary"
         args["data"] = db.get_publication_summary()
-        return jsonify(totalPub=args["data"][1][0][1])
+        return jsonify(totalPub=args["data"][1][0][5])
     if(status == "totalAuth"):
         args["title"] = "Publication Summary"
         args["data"] = db.get_publication_summary()
-        return jsonify(totalAuth=args["data"][1][1][1])
+        return jsonify(totalAuth=args["data"][1][1][5])
     if(status == "pubByYear"):
         args["title"] = "Publication Summary"
         args["data"] = db.get_publications_by_year()
@@ -226,6 +226,14 @@ def showAuthorDetailsPubType():
         args["title"] = "Author Search"
         args["data"] = db.get_author_search_details()
         return render_template('authorSearch.html', args=args)
+
+@app.route("/coauthorDegree")
+def showCoAuthorDegree():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"coauthorDegree"}
+    args["title"] = "Coauthor Degree"
+    return render_template('coauthorDegree.html',args=args)
 
 
 

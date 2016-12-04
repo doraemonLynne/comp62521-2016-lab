@@ -5,9 +5,8 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../static/css/function.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/indexStyle.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     <script src="../static/js/jquery.js"></script>
     <script type="text/javascript" src="../static/js/move-top.js"></script>
     <script type="text/javascript" src="../static/js/easing.js"></script>
@@ -18,7 +17,7 @@
     $(function() {
         $(".nav-fir").mouseenter(function() {
             $(this).find(".nav-sec").animate({
-                "height": "170%",
+                "height": "130%",
             }, 400)
         })
         $(".nav-fir").mouseleave(function() {
@@ -50,21 +49,23 @@
                 <nav>
                     <div class="m-menu f-cb">
                         <div class="nav-fir"><a href="/">Home</a></div>
-                        <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publication Summary</a></div>
+                        <div class="nav-fir"><a href="/statisticsdetails/publication_summary">Publications</a></div>
                         <div class="nav-fir">
                             <a href="#Authors" class="scroll">Authors</a>
                             <div class="nav-sec">
                                 <ul>
-                                    <li><a href="/coauthors">Co-authors</a></li>
-                                </ul>
-                                <ul>
                                     <li><a href="/statisticsdetails/publication_author_sortable">Publication by Author</a></li>
-                                </ul>
-                                <ul>
                                     <li><a href="/statisticsdetails/author_appearingtimes">Author by appearing times</a></li>
-                                </ul>
-                                <ul>
                                     <li><a href="/statisticsdetails/author_search">Author Search</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav-fir">
+                            <a href="#Co-authors" class="scroll">Co-authors</a>
+                            <div class="nav-sec">
+                                <ul>
+                                    <li><a href="/coauthors">Co-author Details</a></li>
+                                    <li><a href="/coauthorDegree">Co-author Degree</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -90,9 +91,7 @@
             </div>
         </div>
         <div id="content">
-            <div class="m-box">
-                <h1 class="dataSetName">COMP62521: {{ args.dataset }}</h1> {% block content %}{% endblock %}
-            </div>
+            <div class="m-box">{% block content %}{% endblock %}</div>
             <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
         </div>
     </div>
