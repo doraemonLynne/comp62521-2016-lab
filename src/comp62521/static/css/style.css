@@ -31,6 +31,11 @@ table {
     display: table;
 }
 
+table thead th{
+    /*background: rgb(124, 181, 236);*/
+    font-weight: bold;
+}
+
 table,
 th,
 td {
@@ -74,7 +79,7 @@ table tbody {
 .authorSearch input {
     position: absolute;
     top: -15px;
-    right: 100px;
+    right: 80px;
     width: 200px;
     height: 33px;
     font-size: 20px;
@@ -88,7 +93,7 @@ table tbody {
     position: absolute;
     width: 70px;
     height: 33px;
-    right: 20px;
+    right: 0;
     top: -15px;
     background: #23B6FA;
     color: #fff;
@@ -105,4 +110,28 @@ table tbody {
 .tables {
     margin-top: 20px;
     width: 650px;
+}
+
+#content .dataSetName{
+    display: none;
+}
+
+#content h1{
+    color: rgb(124, 181, 236);
+    font-size: 25px;
+    font-family: "Malayalam MN";
+}
+
+.coauthorsForm{
+    color: #222;
+    font-size: 16px;
+    position: absolute;
+    right: 55px;
+    top: 170px;
+}
+
+#content .tableTitle{
+    color: #000;
+    font-size: 20px;
+    margin: 20px 0;
 }

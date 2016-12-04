@@ -18,15 +18,15 @@
     $(function() {
         $(".nav-fir").mouseenter(function() {
             $(this).find(".nav-sec").animate({
-                opacity: '1'
+                "height": "170%",
             }, 400)
         })
         $(".nav-fir").mouseleave(function() {
             $(this).find(".nav-sec").animate({
-                opacity: '0'
+                "height": "0",
             }, 400)
         })
-    })
+    });
     </script>
     <script type="text/javascript">
     jQuery(document).ready(function($) {
@@ -84,13 +84,15 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="nav-fir"><a href="#Help" class="scroll">Help</a></div>
+                        <div class="nav-fir"><a href="#Help">Help</a></div>
                     </div>
                 </nav>
             </div>
         </div>
         <div id="content">
-            <h1>COMP62521: {{ args.dataset }}</h1> {% block content %}{% endblock %}
+            <div class="m-box">
+                <h1 class="dataSetName">COMP62521: {{ args.dataset }}</h1> {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
     <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
