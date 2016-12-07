@@ -7,6 +7,7 @@ from xml.sax import handler, make_parser, SAXException
 PublicationType = [
     "Conference Paper", "Journal", "Book", "Book Chapter"]
 LastNamePart = set(["van","der","de","du","al","el","da","Van","Der","De","Du","Al","El","Da"])
+separation_checked_authors = []
 
 class Publication:
     CONFERENCE_PAPER = 0
@@ -493,6 +494,12 @@ class Database:
         return [ (self.authors[key].name, data[key])
             for key in data ]
 
+    def get_coauthor_details_author_control(self, name, include_self):
+        author_id = self.author_idx[name]
+        data = self._get_collaborations(author_id, include_self)
+        return [ (self.authors[key].name, data[key])
+            for key in data ]
+
     def get_network_data(self):
         na = len(self.authors)
 
@@ -505,6 +512,25 @@ class Database:
                 if a < a2:
                     links.add((a, a2))
         return (nodes, links)
+
+    def get_author_separation_degree(self, name1, name2, degree):
+        pos_coauthors = self.get_coauthor_details_author_control(name1, False)
+        pos_coauthor_names=[]
+        for coauth in pos_coauthors:
+            pos_coauthor_names.append(coauth[0])
+        if not pos_coauthor_names:
+            return False, -1
+        if name2 in pos_coauthor_names:
+            return True, degree
+        else:
+            degree+=1
+            for coauth_name in pos_coauthor_names:
+                if coauth_name in separation_checked_authors:
+                    return False, -1
+                else:
+                    separation_checked_authors.append(coauth_name)
+                    return self.get_author_separation_degree(coauth_name, name2, degree)
+
 
 
 class DocumentHandler(handler.ContentHandler):

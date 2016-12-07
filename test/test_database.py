@@ -244,5 +244,59 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(asoledata[0][4], 0, "incorrect number of book chapters as sole author")
         self.assertEqual(coauthordata[0][0], 15, "incorrect number of coauthors")
 
+    def test_get_coauthor_details(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"three-authors-and-three-publications.xml")))
+        coauthors = db.get_coauthor_details('Valeria De Antonellis')
+        # print coauthors
+        # print 'In test_get_coauthor_details:: coauthors are: '
+        # if not coauthors:
+        #      print 'error 404 coauthor not found'
+        # else:
+        #      print coauthors[0][0]
+        one = 1
+        self.assertEqual(one,1, "dumbass")
+
+    def test_get_coauthor_details_author_control(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"three-authors-and-three-publications.xml")))
+        coauthors = db.get_coauthor_details_author_control('Valeria De Antonellis', False)
+        # print 'In test_get_coauthor_details_author_control:: coauthors are: '
+        # print coauthors
+        # if not coauthors:
+        #      print 'error 404 coauthor not found'
+        # else:
+        #      print coauthors[0][0]
+        one = 1
+        self.assertEqual(one,1, "dumbass")
+
+
+    def test_get_author_separation_degree(self):
+        db = database.Database()
+        self.assertTrue(db.read(path.join(self.data_dir,"separation degree tests.xml")))
+        found, degree = db.get_author_separation_degree('Stefano Ceri','Valeria De Antonellis',0 )
+        self.assertEqual(found,True, "Found output should be true")
+        self.assertEqual(degree,1, "Incorrect separation degree calculated")
+        # print 'In test_get_author_separation_degree:: found boolean and separation degree are: '
+        # print found
+        # print degree
+        # one = 1
+        # self.assertEqual(one,2, "dumbass")
+        found, degree = db.get_author_separation_degree('Stefano Ceri','Krishna G. Kulkarni',0 )
+        self.assertEqual(found,True, "Found output should be true")
+        self.assertEqual(degree,0, "Incorrect separation degree calculated")
+        found, degree = db.get_author_separation_degree('Stefano Ceri','abc',0 )
+        self.assertEqual(found,False, "Found output should be false")
+        self.assertEqual(degree,-1, "separation degree should be 0")
+
+
+
+        self.assertTrue(db.read(path.join(self.data_dir,"publications_small_sample.xml")))
+        found, degree = db.get_author_separation_degree('Raghu Ramakrishnan','Simon Harper',0 )
+        print 'In test_get_author_separation_degree:: found boolean and separation degree are: '
+        print found
+        print degree
+        self.assertEqual(found,True, "Found output should be true")
+        self.assertEqual(degree,0, "Incorrect separation degree calculated")
 if __name__ == '__main__':
     unittest.main()
