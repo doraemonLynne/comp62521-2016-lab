@@ -1,3 +1,55 @@
 {% extends "base.html" %} {% block title %}{{ args.title }}{% endblock %} {% block content %}
+<script type="text/javascript">
+$(function() {
+    $("#calBtn").bind("click",function() {
+        $.getJSON('/coauthorDegree/Calculate',{
+        	authorName1: $('input[name="authorName1"]').val(),
+        	authorName2: $('input[name="authorName2"]').val()
+        },function(data) {
+        	$(".authorName1").text($("#authorName1").val());
+        	$(".authorName2").text($("#authorName2").val());
+
+        	var degree=data.degree;
+        	var found=data.found;
+            if (found==false){
+            	degree="X";
+            }
+            $(".degree").text(degree);
+            $(".found").text(found);
+
+            var row="<tr>"+
+            "<td>" + $(".authorName1").text() + "</td>"+
+            "<td>" + $(".authorName2").text() + "</td>"+
+            "<td>" + $(".degree").html() + "</td>"+
+            "</tr>";
+
+            $("tbody").append(row);
+        });
+        return false;
+    }) 
+})
+</script>
+<form name="authorDegree" action="" method="get" class="authorDegree">
+    <label for="authorName1">Author1:</label>
+    <input type="text" name="authorName1" id="authorName1" maxlength="50">
+    <label for="authorName2">Author2:</label>
+    <input type="text" name="authorName2" id="authorName2" maxlength="50">
+    <a id="calBtn" href="#">Calculate</a>
+</form>
+
 <h1>{{ args.title }}</h1>
-{% endblock %}
+<table>
+    <thead>
+        <tr>
+            <th>Author1</th>
+            <th>Author2</th>
+            <th>Degrees of separation</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<i class="authorName1" style="display: none"></i>
+<i class="authorName2" style="display: none"></i>
+<i class="degree" style="display: none"></i>
+<i class="found" style="display: none"></i> {% endblock %}

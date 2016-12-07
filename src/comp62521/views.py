@@ -133,6 +133,7 @@ def showPublicationSummary(status):
     if (status == "publication_author"):
         args["title"] = "Author Publication"
         args["data"] = db.get_publications_by_author()
+        return render_template('statisticsdetails.html', args=args)
 
     if (status == "publication_year"):
         args["title"] = "Publication by Year"
@@ -143,8 +144,6 @@ def showPublicationSummary(status):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
         return render_template('authorYear.html', args=args)
-
-    return render_template('statisticsdetails.html', args=args)
 
 @app.route("/statisticsdetails/author_appearingtimes")
 def showAppearingTimes():
@@ -232,14 +231,18 @@ def showCoAuthorDegree():
     dataset = app.config['DATASET']
     db = app.config['DATABASE']
     args = {"dataset":dataset, "id":"coauthorDegree"}
-    args["title"] = "Coauthor Degree"
-    authorName1=""
-    authorName2=""
+    args["title"] = "Author Search"
+    return render_template('coauthorDegree.html', args=args)
+
+@app.route("/coauthorDegree/Calculate")
+def showCoAuthorDegreeCal():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"coauthorDegree"}
+    authorName1=request.args.get('authorName1')
+    authorName2=request.args.get('authorName2')
     degree = 0
     found = False
-    ## db.get_author_separation_degree(authorName1, authorName2, degree)  takes the name of the 2 authors and recursively calculates
-    ## the degree of separation between the 2. The initial degree argument is basically used to input 0, i've parametrized it for ease of use.
-    ## we need to know how to expose the data to the web page, as well as how to get authorName1 and authorName2 from the web page.
     found, degree = db.get_author_separation_degree(authorName1, authorName2, degree)
-    #args["data"] = db.get_author_separation_degree()
-    return render_template('coauthorDegree.html',args=args)
+    return jsonify(found=found,degree=degree)
+    

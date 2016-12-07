@@ -530,8 +530,8 @@ class Database:
                 else:
                     separation_checked_authors.append(coauth_name)
                     return self.get_author_separation_degree(coauth_name, name2, degree)
-
-
+        del self.separation_checked_authors[:]
+    
 
 class DocumentHandler(handler.ContentHandler):
     TITLE_TAGS = [ "sub", "sup", "i", "tt", "ref" ]

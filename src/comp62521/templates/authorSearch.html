@@ -19,21 +19,35 @@ $(function() {
     })
 })
 </script>
-
 <!-- add links -->
 <script type="text/javascript">
-$(function(){
-    $("tbody tr td:nth-child(1)").click(function(){
-        $(this).find("a").attr("href","/statisticsdetails/authorDetailsPublicationType?autherName="+$(this).text());
+$(function() {
+    $("tbody tr td:nth-child(1)").click(function() {
+        $(this).find("a").attr("href", "/statisticsdetails/authorDetailsPublicationType?autherName=" + $(this).text());
     })
 })
 </script>
+<!-- <script type="text/javascript">
+    $(function(){
+        $(".calBtn").click(function(){
+            $(".autherSearchTable").css({"display","none"})
+            $(".authorDegreeTable tbody tr").append("<td>"+$("#authorName1").value()+"</td><td>"+$("#authorName2").value()+"</td><td>"+$(".degree").html()+"<td>")
+        })
+    })
+</script> -->
 <form name="authorSearch" action="/statisticsdetails/author_search" method="get" class="authorSearch">
     <input type="text" name="searchText" id="searchText" maxlength="50">
     <button>Search</button>
 </form>
+<!-- <form name="authorDegree" action="/statisticsdetails/coauthorDegree" method="get" class="authorDegree">
+    <label for id="authorName1">Author1:</label>
+    <input type="text" name="authorName1" id="authorName1" maxlength="50">
+    <label for id="authorName2">Author2:</label>
+    <input type="text" name="authorName2" id="authorName1" maxlength="50">
+    <button class="calBtn">Calculate</button>
+</form> -->
 <h1>{{ args.title }}</h1>
-<table>
+<table class="autherSearchTable">
     <thead>
         <tr>
             {% for column in args.data[0] %}
@@ -51,4 +65,17 @@ $(function(){
         {% endfor %}
     </tbody>
 </table>
+<!-- <table class="authorDegreeTable">
+    <thead>
+        <tr>
+            <th>Author1</th>
+            <th>Author2</th>
+            <th>Degrees of separation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr></tr>
+    </tbody>
+</table>
+<i class="degree">1</i> -->
 {% endblock %}
