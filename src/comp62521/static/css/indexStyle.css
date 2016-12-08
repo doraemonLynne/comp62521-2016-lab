@@ -238,8 +238,9 @@
 }
 
 .author-part p {
-    margin-top: 20px;
-    font-size: 13px;
+    width: 60%;
+    margin: 20px auto;
+    font-size: 15px;
 }
 
 .m-coauthor {
@@ -308,8 +309,9 @@
     transform: translateY(0);
 }
 .coauthor-part p {
-    margin-top: 20px;
-    font-size: 13px;
+    width: 35%;
+    margin: 20px auto;
+    font-size: 15px;
 }
 footer{
     margin-top: 0;

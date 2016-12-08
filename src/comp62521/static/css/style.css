@@ -67,6 +67,69 @@ h1 {
     margin-bottom: 20px;
 }
 
+button {
+    width: 70px;
+    height: 33px;
+    background: #23B6FA;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+}
+
+#content .tableTitle {
+    color: #000;
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+#content {
+    margin-top: 100px;
+}
+
+footer {
+    height: 100px;
+    line-height: 100px;
+    width: 100%;
+    margin-top: 150px;
+    text-align: center;
+    font-size: 30px;
+    background: rgb(124, 181, 236);
+    color: #fff;
+}
+
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 10px;
+    right: 3%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border: none;
+    text-indent: 100%;
+    background: url("../images/arrow_up.png") no-repeat 50% 44% #2195de;
+    border-radius: 30em;
+}
+
+#toTopHover {
+    width: 40px;
+    height: 40px;
+    display: block;
+    overflow: hidden;
+    float: right;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#toTop:active,
+#toTop:focus {
+    outline: none;
+}
+
 .returnBtn {
     margin: 10px 0 0 10px;
     display: inline-block;
@@ -149,6 +212,37 @@ table tbody {
     height: 33px;
     right: 0;
     top: -15px;
+}
+
+.authorDegree {
+    float: right;
+}
+
+.authorDegree label {
+    display: block;
+    font-size: 20px;
+    font-family: "Malayalam MN";
+    margin: 10px 0;
+}
+
+.authorDegree input {
+    display: block;
+    width: 200px;
+    height: 35px;
+    font-size: 16px;
+    text-indent: 5px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+.authorDegree a {
+    display: inline-block;
+    margin-top: 30px;
+    width: 200px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
     background: #23B6FA;
     color: #fff;
     outline: none;
@@ -156,7 +250,13 @@ table tbody {
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
 }
-.authorDegree
+.showTotalAuthors{
+    width: 60%;
+}
+
+.showTotalAuthors tbody td{
+    line-height: 30px; 
+}
 
 #container {
     margin-top: 50px;
@@ -165,10 +265,6 @@ table tbody {
 .tables {
     margin-top: 20px;
     width: 650px;
-}
-
-#content {
-    margin-top: 100px;
 }
 
 #content h1 {
@@ -180,53 +276,27 @@ table tbody {
 .coauthorsForm {
     color: #222;
     font-size: 16px;
-    position: absolute;
-    right: 55px;
-    top: 170px;
 }
 
-#content .tableTitle {
-    color: #000;
-    font-size: 20px;
-    margin: 20px 0;
-}
-#toTop {
-    display: none;
-    text-decoration: none;
-    position: fixed;
-    bottom: 10px;
-    right: 3%;
-    overflow: hidden;
-    width: 40px;
-    height: 40px;
+.coauthorsForm input,
+.coauthorsForm select {
+    width: 150px;
+    height: 30px;
+    padding-left: 5px;
+    margin: 0 10px;
     border: none;
-    text-indent: 100%;
-    background: url("../images/arrow_up.png") no-repeat 50% 44% #2195de;
-    border-radius: 30em;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3);
 }
 
-#toTopHover {
-    width: 40px;
-    height: 40px;
-    display: block;
-    overflow: hidden;
-    float: right;
-    opacity: 0;
-    -moz-opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-#toTop:active,
-#toTop:focus {
-    outline: none;
-}
-
-footer{
-    width: 100%;
-    margin-top: 30px;
-    padding: 30px;
-    text-align: center;
-    font-size: 30px;
-    background:rgb(124, 181, 236);
+.coauthorsForm input[type="submit"]{
+    margin-top: 25px;
+    width: 100px;
+    height: 30px;
+    background: #23B6FA;
     color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
 }

@@ -27,25 +27,10 @@ $(function() {
     })
 })
 </script>
-<!-- <script type="text/javascript">
-    $(function(){
-        $(".calBtn").click(function(){
-            $(".autherSearchTable").css({"display","none"})
-            $(".authorDegreeTable tbody tr").append("<td>"+$("#authorName1").value()+"</td><td>"+$("#authorName2").value()+"</td><td>"+$(".degree").html()+"<td>")
-        })
-    })
-</script> -->
 <form name="authorSearch" action="/statisticsdetails/author_search" method="get" class="authorSearch">
     <input type="text" name="searchText" id="searchText" maxlength="50">
     <button>Search</button>
 </form>
-<!-- <form name="authorDegree" action="/statisticsdetails/coauthorDegree" method="get" class="authorDegree">
-    <label for id="authorName1">Author1:</label>
-    <input type="text" name="authorName1" id="authorName1" maxlength="50">
-    <label for id="authorName2">Author2:</label>
-    <input type="text" name="authorName2" id="authorName1" maxlength="50">
-    <button class="calBtn">Calculate</button>
-</form> -->
 <h1>{{ args.title }}</h1>
 <table class="autherSearchTable">
     <thead>

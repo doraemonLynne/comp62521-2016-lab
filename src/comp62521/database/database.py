@@ -532,6 +532,11 @@ class Database:
                     return self.get_author_separation_degree(coauth_name, name2, degree)
         del self.separation_checked_authors[:]
     
+    def getAuthors(self):
+        header=("Total Authors",)
+        data = [[self.authors[i].name] for i in range(len(self.authors))]
+        return (header,data)
+
 
 class DocumentHandler(handler.ContentHandler):
     TITLE_TAGS = [ "sub", "sup", "i", "tt", "ref" ]

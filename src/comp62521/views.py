@@ -231,7 +231,8 @@ def showCoAuthorDegree():
     dataset = app.config['DATASET']
     db = app.config['DATABASE']
     args = {"dataset":dataset, "id":"coauthorDegree"}
-    args["title"] = "Author Search"
+    args["title"] = "Author Degree"
+    args["data"] = db.getAuthors()
     return render_template('coauthorDegree.html', args=args)
 
 @app.route("/coauthorDegree/Calculate")
