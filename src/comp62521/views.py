@@ -246,4 +246,23 @@ def showCoAuthorDegreeCal():
     found = False
     found, degree = db.get_author_separation_degree(authorName1, authorName2, degree)
     return jsonify(found=found,degree=degree)
-    
+
+@app.route("/getcoauthorTest")
+def getCoauthorTestDetails():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"coauthorDegreeTest"}
+    return render_template('coauthorDegreeTest.html', args=args)
+
+@app.route("/getcoauthorTest/Search")
+def getCoauthorTest():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"coauthorDegreeTest"}
+    searchText=request.args.get('searchText')
+    if searchText:
+        args["title"] = "Author Degree Test"
+        coauthors = db.getCoauthor(searchText)
+        return jsonify(coauthors=coauthors)
+    else:
+        return render_template('coauthors.html', args=args)

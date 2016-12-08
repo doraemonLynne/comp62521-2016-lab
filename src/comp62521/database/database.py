@@ -2,6 +2,7 @@ from comp62521.statistics import average
 import itertools
 import operator
 import numpy as np
+import json
 from xml.sax import handler, make_parser, SAXException
 
 PublicationType = [
@@ -536,6 +537,25 @@ class Database:
         header=("Total Authors",)
         data = [[self.authors[i].name] for i in range(len(self.authors))]
         return (header,data)
+
+
+    def getCoauthor(self,author):
+        coauthors = {}
+        for p in self.publications:
+            for author in p.authors:
+                    for a in p.authors:
+                        if author != a:
+                            try:
+                                coauthors[author].add(a)
+                            except KeyError:
+                                coauthors[author] = set([a])
+        data=[]
+        def display(db, coauthors, author_id):
+            return "%s" % (db.authors[author_id].name)
+        for author in coauthors:
+            data.append([
+                    display(self, coauthors, ca) for ca in coauthors[author]])
+        return data
 
 
 class DocumentHandler(handler.ContentHandler):
