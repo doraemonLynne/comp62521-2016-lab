@@ -15,16 +15,11 @@
     <script src="../static/js/data.js"></script>
     <script type="text/javascript">
     $(function() {
-        $(".nav-fir").mouseenter(function() {
-            $(this).find(".nav-sec").animate({
-                "height": "130%",
-            }, 400)
-        })
-        $(".nav-fir").mouseleave(function() {
-            $(this).find(".nav-sec").animate({
-                "height": "0",
-            }, 400)
-        })
+        $(".nav-fir").hover(function() {
+            $(this).find(".nav-sec").fadeIn(500);
+        },function(){
+            $(this).find(".nav-sec").fadeOut(100);
+        });
     });
     </script>
     <script type="text/javascript">
@@ -65,7 +60,6 @@
                             <div class="nav-sec">
                                 <ul>
                                     <li><a href="/coauthors">Co-author Details</a></li>
-                                    <li><a href="/getcoauthorTest">Co-author Test</a></li>
                                     <li><a href="/coauthorDegree">Co-author Degree</a></li>
                                 </ul>
                             </div>
